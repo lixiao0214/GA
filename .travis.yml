@@ -2,14 +2,15 @@ sudo: false
 
 language: r
 
-python:
-  - 3.5
-
 script:
   # Tests
   - make test
 
 notifications:
+  recipients:
+    - lei_zhang@berkeley.edu
+    - jinhui_xu@berkeley.edu
+    - lixiao1995@berkeley.edu
   email:
     on_success: change
     on_failure: change
