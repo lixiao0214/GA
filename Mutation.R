@@ -1,14 +1,9 @@
 # Set the initial mutation rate = 0.01
 mutation_rate <- 0.01
 
-# I assume the input will be in vector form first
-# Later I will modify it to other data type
 Mutation <- function(input,mutation_rate){
-  # Generate an empty vector to store gene after mutation
+  # Generate a copy of the input
   after_mutation <- input
-  
-  # Generate an empty vector for further use of random sample
-  rand <- c()
   
   # The logic of this for loop:
   # To make a value change based on a value, I will do following simulation:
@@ -26,8 +21,6 @@ Mutation <- function(input,mutation_rate){
 
   return(after_mutation)
 }
-
-
 
 
 # test
