@@ -61,7 +61,7 @@ onepropselection <- function(originalparents, couplenum, fitness){
 ###The best individual in each group is chosen as a parent.
 ###Additional random partitionings are carried out until sufficient parents have
 ###been generated.Parents are then paired randomly for breeding. 
-tournament <- function(originalparents, couplenum, subsetnum){
+tournament <- function(originalparents, couplenum, subsetnum, fitness){
   partitiontime <- ceiling(couplenum*2/subsetnum)
   parentspool <- matrix(0, partitiontime*subsetnum , ncol(originalparents))
   getsubpars <- function(originalparents,subsetnum){
@@ -103,7 +103,7 @@ selectparents <- function(originalparents, couplenum, method, fitness, subsetnum
   switch(method, 
          twopropselection = twopropselection(originalparents, couplenum, fitness),
          onepropselection = onepropselection(originalparents, couplenum, fitness),
-         tournament = tournament(originalparents, couplenum, subsetnum))
+         tournament = tournament(originalparents, couplenum, subsetnum, fitness))
 }
 
 
