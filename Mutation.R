@@ -17,7 +17,7 @@ Mutation <- function(input,mutation_rate){
   # Then we random sample one value from this new vector
   # The for-loop is working to such algorithm to every element in the vector
   for(i in 1:length(input)){
-    if(t1[i]==0) {
+    if(input[i]==0) {
       rand <- c(rep(input[i],round(1/mutation_rate)-1),1)
     } else {
       rand <- c(rep(input[i],round(1/mutation_rate)-1),0)
@@ -31,7 +31,7 @@ Mutation <- function(input,mutation_rate){
 
 # test
 set.seed(123)
-t1 <- sample(c(0,1),10,replace = T)
-t1
-Mutation(t1,0.01)
+test1 <- sample(c(0,1),10,replace = T)
+test1
+Mutation(test1,0.01)
 
