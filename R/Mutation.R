@@ -1,7 +1,7 @@
 # Set the initial mutation rate = 0.01
 mutation_rate <- 0.01
 
-Mutation <- function(input, mutation_rate){
+generate_mutation <- function(input, mutation_rate){
   # Generate a copy of the input
   after_mutation <- input
 
@@ -23,6 +23,6 @@ Mutation <- function(input, mutation_rate){
 }
 
 
-# test
+# Test
 m <- matrix(rep(c(0,1), 30000), ncol = 30)
-system.time(Mutation(m, 0.01))
+system.time(generate_mutation(m, 0.01))

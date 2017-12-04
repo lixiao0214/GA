@@ -5,6 +5,8 @@
 # Input: list of (boolean data.frame with column 'features' and rows element of the population)
 # Output: list of (boolean data.frame with column 'features' and rows element of the population, goodness-of-fit)
 
+
+# To update
 check_input <- function(input) {
   #' Checking Modelling Input
   #'
