@@ -5,33 +5,31 @@ mutation_rate <- 0.01
 # Later I will modify it to other data type
 Mutation <- function(input,mutation_rate){
   # Generate an empty vector to store gene after mutation
-  after_mutation <- c()
+  after_mutation <- input
   
   # Generate an empty vector for further use of random sample
   rand <- c()
   
   # The logic of this for loop:
   # To make a value change based on a value, I will do following simulation:
-  # Create size (1/desired prob) vector, with (1/desired prob)-1 values are the same
-  # One of the values is different from all other values
-  # Then we random sample one value from this new vector
-  # The for-loop is working to such algorithm to every element in the vector
-  for(i in 1:length(input)){
-    if(input[i]==0) {
-      rand <- c(rep(input[i],round(1/mutation_rate)-1),1)
-    } else {
-      rand <- c(rep(input[i],round(1/mutation_rate)-1),0)
+  # Generate a random number from Unif(0,1)
+  # Compare the random number with mutation rate
+  # If the random number is smaller than the mutation number
+  # The corresponding gene will mutate
+  # Otherwise, the value will stay the same
+  for(i in length(input)){
+    u <- runif(1)
+    if(u <= mutation_rate){
+      after_mutation[i] <- abs(after_mutation[i]-1)
     }
-    after_mutation[i] <- sample(rand,1)
   }
-  
+
   return(after_mutation)
 }
 
 
-# test
-set.seed(123)
-test1 <- sample(c(0,1),10,replace = T)
-test1
-Mutation(test1,0.01)
 
+
+# test
+m <- matrix(rep(c(0,1),30000),ncol = 30)
+system.time(Mutation(m,0.01))
