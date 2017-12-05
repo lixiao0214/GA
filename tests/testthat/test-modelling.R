@@ -1,5 +1,5 @@
 library(testthat)
-source('../R/modelling.R')
+# source('../R/modelling.R')
 
 context("Modelling tests")
 
