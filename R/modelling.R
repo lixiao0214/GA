@@ -28,6 +28,7 @@ get_goodness_of_fit <- function(df, regression_target, criterion = "AIC") {
   #' @param df data.frame: regression_target and covariates
   #' @param regression_target character: column of df regressed on other covariates in df
   #' @param criterion character: goodness of fit criterion
+  #' @example get_goodness_of_fit(df = subset_data, regression_target = regression_target, criterion = "AIC")
 
   stopifnot(is.data.frame(df))
   stopifnot(is.character(regression_target))
@@ -61,6 +62,9 @@ compute_population_goodness_of_fit <- function(data, population, regression_targ
   #' @param population data.frame: selected column per element of the population
   #' @param regression_target character: column of df regressed on other covariates in df
   #' @param criterion character: goodness of fit criterion
+  #' @example
+  #' population_new = compute_population_goodness_of_fit(data = main_dataset, population = population, regression_target = 'col_1')
+
 
   stopifnot(is.data.frame(data))
   stopifnot(is.data.frame(population))
