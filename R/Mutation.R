@@ -18,11 +18,17 @@ generate_mutation <- function(input, mutation_rate){
       after_mutation[i] <- abs(after_mutation[i] - 1)
     }
   }
-
-  return(after_mutation)
+  df_mutation <- as.data.frame(after_mutation)
+  names(df_mutation) <- c('col_1', 'col_2', 'col_3', 'col_4', 'col_5','col_6', 'col_7', 'col_8', 'col_9', 'col_10')
+  regression_target <- "col_1"
+  df_mutation[regression_target] = 1
+  offsprings <- compute_population_goodness_of_fit(data = main_dataset,
+                                                   population = df_mutation,
+                                                   regression_target = 'col_1')
+  return(offsprings)
 }
 
 
 # Test
-m <- matrix(rep(c(0,1), 30000), ncol = 30)
+m <- matrix(rbinom(n = 300, prob = .5, size = 1), ncol = 10)
 system.time(generate_mutation(m, 0.01))
