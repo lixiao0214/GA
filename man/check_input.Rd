@@ -6,9 +6,15 @@
 \usage{
 check_input(input)
 }
+\arguments{
+\item{input}{list of data.frames}
+}
 \description{
-This function checks whether the input is the appropriate format
+Checks whether the input is the appropriate format
+}
+\examples{
+check_input(input = list(data.frame(a=1), data.frame(b=2)))
 }
 \author{
-Louis
+Louis Rémus
 }

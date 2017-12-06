@@ -1,9 +1,9 @@
 # Importing files
-source("modelling.R")
-source("mutation.R")
-source("selectparent0.R")
-source("selectparent1.R")
-source("cross_p_split.R")
+source("R/modelling.R")
+source("R/mutation.R")
+# source("selectparent0.R")
+source("R/selectparent1.R")
+source("R/cross_p_split.R")
 
 
 # Generate init dataset
@@ -16,6 +16,8 @@ names(population) <- c('col_1', 'col_2', 'col_3', 'col_4', 'col_5', 'col_6', 'co
 # Parameters
 regression_target <- 'col_1'
 
+# Make sure we always have the regression_target column
+population[regression_target] = 1
 
 # Modelling
 for (i in 1:nrow(population)) {
@@ -24,7 +26,7 @@ for (i in 1:nrow(population)) {
   main_dataset
   # Compute goodness_of_fit
 }
-get_goodness_of_fit(df = df, regression_target = regression_target)
+# get_goodness_of_fit(df = df, regression_target = regression_target)
 
 AIC_values <- runif(nrow(population))
 population['AIC'] <- AIC_values

@@ -14,3 +14,7 @@ clean: ## Remove python artifacts and logs.
 
 tests: ## Run tests
 	@echo "No test for now"
+
+docs: ## Build the documentation
+	@Rscript -e "devtools::document()"
+
