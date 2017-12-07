@@ -31,6 +31,7 @@
 ###method one : select one parent with probability proportional to fitness(or fitnessrank)
 ###and to select the other parent completely at random
 twopropselection <- function(originalparents, couplenum, fitness){
+  #' Method : twopropselection
   #' Select parents independently with probability proportional to fitness
   #'
   #' Returns the selected parents ~ list
@@ -41,7 +42,7 @@ twopropselection <- function(originalparents, couplenum, fitness){
   #' @example twopropselection(originalparents = firstgeneration, couplenum = 5, fitness = AICvalue)
 
   stopifnot(is.matrix(originalparents))
-  stopifnot(is.integer(couplenum))
+  stopifnot(is.numeric(couplenum))
   stopifnot(is.vector(fitness))
 
 
@@ -62,19 +63,20 @@ twopropselection <- function(originalparents, couplenum, fitness){
 
 ###method two:select each parent independently with probability proportional to fitness
 onepropselection <- function(originalparents, couplenum, fitness){
+  #' Method : onepropselection
   #' Select one parent with probability proportional to fitness and to select
   #' the other parent completely at random
   #'
   #' Returns the selected parents ~ list
   #' @author Lei Zhang
-     #' @param originalparents : a casenum * variablenum matrix
-     #' @param couplenum : number of couples selected
-     #' @param fitness: goodness of fit ~ a casenum * 1 vector , default is AICvalue
-     #' @example twopropselection(originalparents = firstgeneration, couplenum = 5, fitness = AICvalue)
+  #' @param originalparents : a casenum * variablenum matrix
+  #' @param couplenum : number of couples selected
+  #' @param fitness: goodness of fit ~ a casenum * 1 vector , default is AICvalue
+  #' @example onepropselection(originalparents = firstgeneration, couplenum = 5, fitness = AICvalue)
 
-     stopifnot(is.matrix(originalparents))
-     stopifnot(is.integer(couplenum))
-     stopifnot(is.vector(fitness))
+  stopifnot(is.matrix(originalparents))
+  stopifnot(is.numeric(couplenum))
+  stopifnot(is.vector(fitness))
 
 
 
@@ -97,6 +99,25 @@ onepropselection <- function(originalparents, couplenum, fitness){
 ###Additional random partitionings are carried out until sufficient parents have
 ###been generated.Parents are then paired randomly for breeding.
 tournament <- function(originalparents, couplenum, subsetnum, fitness){
+  #' Method : tournament selection
+  #' the set of parents in generation t is randomly partitioned into k disjoint
+  #' subsets of equal size(perhaps with a few remaining parents temporarily ignored)
+  #' The best individual in each group is chosen as a parent.
+  #' Additional random partitionings are carried out until sufficient parents have
+  #' been generated.Parents are then paired randomly for breeding.
+  #'
+  #' Returns the selected parents ~ list
+  #' @author Lei Zhang
+  #' @param originalparents : a casenum * variablenum matrix
+  #' @param couplenum : number of couples selected
+  #' @param fitness: goodness of fit ~ a casenum * 1 vector , default is AICvalue
+  #' @example tournament(originalparents = firstgeneration, couplenum = 5, fitness = AICvalue, subsetnum = 5 )
+
+  stopifnot(is.matrix(originalparents))
+  stopifnot(is.numeric(couplenum))
+  stopifnot(is.vector(fitness))
+  stopifnot(is.numeric(subsetnum))
+
   fitness <- exp(fitness)/sum(exp(fitness))
   partitiontime <- ceiling(couplenum*2/subsetnum)
   parentspool <- matrix(0, partitiontime*subsetnum, ncol(originalparents))
