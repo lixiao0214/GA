@@ -52,7 +52,7 @@ get_goodness_of_fit <- function(df, regression_target, criterion = "AIC") {
   return(goodness_of_fit)
 }
 
-compute_population_goodness_of_fit <- function(data, population, regression_target,
+goodness_of_fit <- function(data, population, regression_target,
                                                criterion = "AIC", verbose = FALSE) {
   #' Compute Population AIC
   #'
