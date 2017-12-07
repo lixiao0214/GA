@@ -4,12 +4,14 @@
 \alias{get_goodness_of_fit}
 \title{Goodness of Fit}
 \usage{
-get_goodness_of_fit(df, regression_target)
+get_goodness_of_fit(df, regression_target, criterion = "AIC")
 }
 \arguments{
 \item{df}{data.frame: regression_target and covariates}
 
-\item{regression_target}{string: column of df regressed on other covariates in df}
+\item{regression_target}{character: column of df regressed on other covariates in df}
+
+\item{criterion}{character: goodness of fit criterion}
 }
 \description{
 Returns the goodness-of-fit for regression_target ~ df
