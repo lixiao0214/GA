@@ -31,8 +31,8 @@
 ###method one : select one parent with probability proportional to fitness(or fitnessrank)
 ###and to select the other parent completely at random
 twopropselection <- function(originalparents, couplenum, fitness){
-  firstparent <- originalparents[sample(1:nrow(originalparents), size = couplenum, replace = TRUE, 
-                                        exp(fitness)/sum(exp(fitness))),]
+  fitness <- exp(fitness)/sum(exp(fitness))
+  firstparent <- originalparents[sample(1:nrow(originalparents), size = couplenum, replace = TRUE,                                       prob = fitness),]
   secondparent <- originalparents[sample(1:nrow(originalparents), size = couplenum, replace = TRUE),]
   #transform the each row of the matrix into a list
   firstparent <- split(firstparent, row(firstparent)) 
@@ -45,8 +45,9 @@ twopropselection <- function(originalparents, couplenum, fitness){
 
 ###method two:select each parent independently with probability proportional to fitness
 onepropselection <- function(originalparents, couplenum, fitness){
-  firstparent <- originalparents[sample(1:nrow(originalparents), size = couplenum, replace = TRUE, prob = exp(fitness)/sum(exp(fitness)))),]
-  secondparent <- originalparents[sample(1:nrow(originalparents), size = couplenum, replace = TRUE, prob = exp(fitness)/sum(exp(fitness)))),]
+  fitness <- exp(fitness)/sum(exp(fitness))
+  firstparent <- originalparents[sample(1:nrow(originalparents), size = couplenum, replace = TRUE, prob = fitness),]
+  secondparent <- originalparents[sample(1:nrow(originalparents), size = couplenum, replace = TRUE, prob = fitness),]
   #transform the each row of the matrix into a list
   firstparent <- split(firstparent, row(firstparent)) 
   secondparent <- split(secondparent, row(secondparent))
@@ -63,7 +64,7 @@ onepropselection <- function(originalparents, couplenum, fitness){
 ###Additional random partitionings are carried out until sufficient parents have
 ###been generated.Parents are then paired randomly for breeding. 
 tournament <- function(originalparents, couplenum, subsetnum, fitness){
-  fitness <- exp(fitness)/sum(exp(fitness))))
+  fitness <- exp(fitness)/sum(exp(fitness))
   partitiontime <- ceiling(couplenum*2/subsetnum)
   parentspool <- matrix(0, partitiontime*subsetnum , ncol(originalparents))
   getsubpars <- function(originalparents,subsetnum){
