@@ -31,7 +31,8 @@
 ###method one : select one parent with probability proportional to fitness(or fitnessrank)
 ###and to select the other parent completely at random
 twopropselection <- function(originalparents, couplenum, fitness){
-  firstparent <- originalparents[sample(1:nrow(originalparents), size = couplenum, replace = TRUE, prob = fitness ),]
+  firstparent <- originalparents[sample(1:nrow(originalparents), size = couplenum, replace = TRUE, 
+                                        exp(fitness)/sum(exp(fitness))),]
   secondparent <- originalparents[sample(1:nrow(originalparents), size = couplenum, replace = TRUE),]
   #transform the each row of the matrix into a list
   firstparent <- split(firstparent, row(firstparent)) 
@@ -44,8 +45,8 @@ twopropselection <- function(originalparents, couplenum, fitness){
 
 ###method two:select each parent independently with probability proportional to fitness
 onepropselection <- function(originalparents, couplenum, fitness){
-  firstparent <- originalparents[sample(1:nrow(originalparents), size = couplenum, replace = TRUE, prob = fitness),]
-  secondparent <- originalparents[sample(1:nrow(originalparents), size = couplenum, replace = TRUE, prob = fitness),]
+  firstparent <- originalparents[sample(1:nrow(originalparents), size = couplenum, replace = TRUE, prob = exp(fitness)/sum(exp(fitness)))),]
+  secondparent <- originalparents[sample(1:nrow(originalparents), size = couplenum, replace = TRUE, prob = exp(fitness)/sum(exp(fitness)))),]
   #transform the each row of the matrix into a list
   firstparent <- split(firstparent, row(firstparent)) 
   secondparent <- split(secondparent, row(secondparent))
