@@ -3,10 +3,8 @@ mutation_rate <- 0.01
 
 generate_mutation <- function(input,
                               mutation_rate,
-                              main_dataset){
+                              main_dataset=main_dataset){
 
-  #' test
-  #' @author Xiao Li
   # Generate a copy of the input
   after_mutation <- input
 
@@ -28,7 +26,6 @@ generate_mutation <- function(input,
   names(df_mutation) <- c('col_1', 'col_2', 'col_3', 'col_4', 'col_5','col_6', 'col_7', 'col_8', 'col_9', 'col_10')
   regression_target <- "col_1"
   df_mutation[regression_target] = 1
-  browser()
   offsprings <- compute_population_goodness_of_fit(data = main_dataset,
                                                    population = df_mutation,
                                                    regression_target = 'col_1')
@@ -36,7 +33,3 @@ generate_mutation <- function(input,
 }
 
 
-# Test
-m <- matrix(rbinom(n = 300, prob = .5, size = 1), ncol = 10)
-generate_mutation(m, 0.01)
-system.time(generate_mutation(m, 0.01))
