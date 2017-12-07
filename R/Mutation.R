@@ -2,6 +2,9 @@
 mutation_rate <- 0.01
 
 generate_mutation <- function(input, mutation_rate){
+  
+  #' test
+  #' @author Xiao Li
   # Generate a copy of the input
   after_mutation <- input
 
@@ -31,4 +34,5 @@ generate_mutation <- function(input, mutation_rate){
 
 # Test
 m <- matrix(rbinom(n = 300, prob = .5, size = 1), ncol = 10)
+generate_mutation(m, 0.01)
 system.time(generate_mutation(m, 0.01))
