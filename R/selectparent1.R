@@ -5,19 +5,19 @@
 #   #fitness is a casenum * 1 vector , usually it's AICvalue
 #   #fitfun should be a function whose input is originalparents(a casenum * variablenum matrix)
 #   #and its output should be a casenum * 1 vector
-#   
+#
 #   if (fitfun = NULL){
 #     #call the AIC function to calculate the AIC value of the originalparents
 #     fitnessvalue <- AIC(originalparents)
 #   }
 #   else{
 #     fitnessvalue <- fitfun(originalparents)
-#     
+#
 #   }
 #   return(fitnessvalue)
 # }
 
-# 
+#
 # ###some examples of fitfun other than AIC
 # AICrankfit <- function(originalparents){
 #   AICvalue <- AIC(originalparents)
@@ -31,11 +31,25 @@
 ###method one : select one parent with probability proportional to fitness(or fitnessrank)
 ###and to select the other parent completely at random
 twopropselection <- function(originalparents, couplenum, fitness){
+  #' Select parents independently with probability proportional to fitness
+  #'
+  #' Returns the selected parents ~ list
+  #' @author Lei Zhang
+  #' @param originalparents : a casenum * variablenum matrix
+  #' @param couplenum : number of couples selected
+  #' @param fitness: goodness of fit ~ a casenum * 1 vector , default is AICvalue
+  #' @example twopropselection(originalparents = firstgeneration, couplenum = 5, fitness = AICvalue)
+
+  stopifnot(is.matrix(originalparents))
+  stopifnot(is.integer(couplenum))
+  stopifnot(is.vector(fitness))
+
+
   fitness <- exp(fitness)/sum(exp(fitness))
   firstparent <- originalparents[sample(1:nrow(originalparents), size = couplenum, replace = TRUE,                                       prob = fitness),]
   secondparent <- originalparents[sample(1:nrow(originalparents), size = couplenum, replace = TRUE),]
   #transform the each row of the matrix into a list
-  firstparent <- split(firstparent, row(firstparent)) 
+  firstparent <- split(firstparent, row(firstparent))
   secondparent <- split(secondparent, row(secondparent))
   #combine firstparent and secondparent to form the list of paired parents
   newcouple <- mapply(rbind, firstparent, secondparent, SIMPLIFY=FALSE)
@@ -43,13 +57,32 @@ twopropselection <- function(originalparents, couplenum, fitness){
 }
 
 
+
+
+
 ###method two:select each parent independently with probability proportional to fitness
 onepropselection <- function(originalparents, couplenum, fitness){
+  #' Select one parent with probability proportional to fitness and to select
+  #' the other parent completely at random
+  #'
+  #' Returns the selected parents ~ list
+  #' @author Lei Zhang
+     #' @param originalparents : a casenum * variablenum matrix
+     #' @param couplenum : number of couples selected
+     #' @param fitness: goodness of fit ~ a casenum * 1 vector , default is AICvalue
+     #' @example twopropselection(originalparents = firstgeneration, couplenum = 5, fitness = AICvalue)
+
+     stopifnot(is.matrix(originalparents))
+     stopifnot(is.integer(couplenum))
+     stopifnot(is.vector(fitness))
+
+
+
   fitness <- exp(fitness)/sum(exp(fitness))
   firstparent <- originalparents[sample(1:nrow(originalparents), size = couplenum, replace = TRUE, prob = fitness),]
   secondparent <- originalparents[sample(1:nrow(originalparents), size = couplenum, replace = TRUE, prob = fitness),]
   #transform the each row of the matrix into a list
-  firstparent <- split(firstparent, row(firstparent)) 
+  firstparent <- split(firstparent, row(firstparent))
   secondparent <- split(secondparent, row(secondparent))
   #combine firstparent and secondparent to form the list of paired parents
   newcouple <- mapply(rbind, firstparent, secondparent, SIMPLIFY=FALSE)
@@ -62,11 +95,11 @@ onepropselection <- function(originalparents, couplenum, fitness){
 ###subsets of equal size(perhaps with a few remaining parents temporarily ignored)
 ###The best individual in each group is chosen as a parent.
 ###Additional random partitionings are carried out until sufficient parents have
-###been generated.Parents are then paired randomly for breeding. 
+###been generated.Parents are then paired randomly for breeding.
 tournament <- function(originalparents, couplenum, subsetnum, fitness){
   fitness <- exp(fitness)/sum(exp(fitness))
   partitiontime <- ceiling(couplenum*2/subsetnum)
-  parentspool <- matrix(0, partitiontime*subsetnum , ncol(originalparents))
+  parentspool <- matrix(0, partitiontime*subsetnum, ncol(originalparents))
   getsubpars <- function(originalparents,subsetnum){
     totalrownum <- nrow(originalparents)
     index <- sample(1:nrow(originalparents), (floor(totalrownum/subsetnum)*subsetnum), replace = FALSE)
@@ -75,7 +108,7 @@ tournament <- function(originalparents, couplenum, subsetnum, fitness){
     colmaxindex <- apply(fitnessmatrix, 2, which.max )
     selectedindex <- rep(0, ncol(indexmatrix))
     for (i in 1:ncol(indexmatrix)){
-      selectedindex[i] <- indexmatrix[colmaxindex[i],i] 
+      selectedindex[i] <- indexmatrix[colmaxindex[i],i]
     }
     return(originalparents[selectedindex,])
   }
@@ -87,10 +120,10 @@ tournament <- function(originalparents, couplenum, subsetnum, fitness){
   firstparent <- parentspool[firstparentindex,]
   secondparent <- parentspool[-firstparentindex,]
   #transform the each row of the matrix into a list
-  firstparent <- split(firstparent, row(firstparent)) 
+  firstparent <- split(firstparent, row(firstparent))
   secondparent <- split(secondparent, row(secondparent))
   #combine firstparent and secondparent to form the list of paired parents
-  newcouple <- mapply(rbind, firstparent, secondparent, SIMPLIFY=FALSE) 
+  newcouple <- mapply(rbind, firstparent, secondparent, SIMPLIFY=FALSE)
   return(newcouple)
 }
 
@@ -101,9 +134,9 @@ selectparents <- function(originalparents, couplenum, method, fitness, subsetnum
   #originalparents is a casenum * variablenum matrix
   #fitness is a casenum * 1 vector , usually it's AICvalue
   #method is the method to select the parents
-  
+
   #fitness <- getfitness(originalparents, fitfun = fitfun)
-  switch(method, 
+  switch(method,
          twopropselection = twopropselection(originalparents, couplenum, fitness),
          onepropselection = onepropselection(originalparents, couplenum, fitness),
          tournament = tournament(originalparents, couplenum, subsetnum, fitness))
