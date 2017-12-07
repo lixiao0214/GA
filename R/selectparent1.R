@@ -63,6 +63,7 @@ onepropselection <- function(originalparents, couplenum, fitness){
 ###Additional random partitionings are carried out until sufficient parents have
 ###been generated.Parents are then paired randomly for breeding. 
 tournament <- function(originalparents, couplenum, subsetnum, fitness){
+  fitness <- exp(fitness)/sum(exp(fitness))))
   partitiontime <- ceiling(couplenum*2/subsetnum)
   parentspool <- matrix(0, partitiontime*subsetnum , ncol(originalparents))
   getsubpars <- function(originalparents,subsetnum){
