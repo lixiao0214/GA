@@ -52,7 +52,7 @@ get_goodness_of_fit <- function(df, regression_target, criterion = "AIC") {
   return(goodness_of_fit)
 }
 
-goodness_of_fit <- function(data, population, regression_target,
+compute_population_goodness_of_fit <- function(data, population, regression_target,
                                                criterion = "AIC", verbose = FALSE) {
   #' Compute Population AIC
   #'
@@ -72,6 +72,12 @@ goodness_of_fit <- function(data, population, regression_target,
   stopifnot(is.character(criterion))
   # Make sure we always have the regression_target column
   stopifnot(all(population[regression_target] == 1))
+
+  col_names <- names(population)
+  # Cast columns type to numeric
+  population = as.data.frame(sapply(population, as.numeric))
+  names(population) <- col_names
+  stopifnot(is.data.frame(population))
 
   # Compute goodness of fit for each element of the population
   if (verbose) print('Computing goodness of fit for population')
