@@ -2,7 +2,8 @@
 % Please edit documentation in R/selectparent1.R
 \name{onepropselection}
 \alias{onepropselection}
-\title{Select one parent with probability proportional to fitness and to select
+\title{Method : onepropselection
+Select one parent with probability proportional to fitness and to select
 the other parent completely at random}
 \usage{
 onepropselection(originalparents, couplenum, fitness)

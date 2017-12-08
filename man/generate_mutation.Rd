@@ -21,6 +21,7 @@ generate_mutation is used to generate offsprings after mutations based on partic
 And it will give the values of goodness of fit for each offspring.
 }
 \examples{
+# Generate random input and choose a specific dataset in R
 population <- as.data.frame(matrix(rbinom(n = 300, prob = .5, size = 1), ncol = 10))
 main_dataset <- as.data.frame.matrix(crimtab[, 1:10])
 generate_mutation(population, 0.01,main_dataset)

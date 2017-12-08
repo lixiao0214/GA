@@ -2,7 +2,8 @@
 % Please edit documentation in R/selectparent1.R
 \name{twopropselection}
 \alias{twopropselection}
-\title{Select parents independently with probability proportional to fitness}
+\title{Method : twopropselection
+Select parents independently with probability proportional to fitness}
 \usage{
 twopropselection(originalparents, couplenum, fitness)
 }
