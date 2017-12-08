@@ -22,6 +22,19 @@ generate_mutation <- function(input,
   #' main_dataset <- as.data.frame.matrix(crimtab[, 1:10])
   #' generate_mutation(population, 0.01,main_dataset)
   #'
+
+  if(!is.matrix(input)){
+    stop("input should be a matrix.")
+  }
+
+  if(mutation_rate < 0 || mutation_rate > 1){
+    stop("mutation_rate should be a number between 0 and 1.")
+  }
+
+  if(!is.data.frame(main_dataset)){
+    stop("main_dataset should be a data frame.")
+  }
+
   # Generate a copy of the input
   after_mutation <- input
 
@@ -39,7 +52,6 @@ generate_mutation <- function(input,
     }
   }
   df_mutation <- as.data.frame(after_mutation)
-
   names(df_mutation) <- c('col_1', 'col_2', 'col_3', 'col_4', 'col_5','col_6', 'col_7', 'col_8', 'col_9', 'col_10')
   regression_target <- "col_1"
   df_mutation[regression_target] = 1
