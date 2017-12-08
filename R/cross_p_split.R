@@ -1,4 +1,29 @@
 crossover_p_split <- function(parents, p){
+
+  #' Generate offsprings through crossover given parents
+  #'
+  #' @description crossover_p_split returns a dataframe has the same row number with parents. each row of which represents an offsprings
+  #'
+  #' @author Jinhui Xu
+  #'
+  #' @usage crossover_p_split(parents, p)
+  #'
+  #' @param parents a list of couple of parents. Each element of list contains a couple of parents selected to produce offsprings.
+  #' each parent is presented in a binary format 0 or 1.
+  #'
+  #' @param p the number of splits in the process of crossover.
+  #' eg. if p=2, it means parents are splited into 3 parts and then do crossover.
+  #'
+  #' @examples # Generate random parents and choose p=3
+  #' parents<-lapply(1:100, f<-function(i){
+  #'                data<-rbind(rbinom(n = 10, size = 1, prob = runif(n = 1, min = 0, max = 1)),
+  #'                            rbinom(n = 10, size = 1, prob = runif(n = 1, min = 0, max = 1)))
+  #' })
+  #' p <- 3
+  #' crossover_p_split(parents, p)
+  #'
+
+
   new_generation<-c()
   # Calculate the length of chromosomes C, and the numebr of pairs of parents P
   C<-length(parents[[1]][1,]);P<-length(parents)
