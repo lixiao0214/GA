@@ -1,23 +1,48 @@
-replace_population1 <- function(parents,     # Generation t
-                               offsprings,   # Generation t+1
-                               pct           # percentage of generation t will be 
-                                             # replaced by generation t+1
-                               ){
-  goodness_order <- order(parents$goodness_of_fit,decreasing = T)
-  index <- goodness_order[1:length(goodness_order)*(1-pct)]
-  next_generation <- rbind(parents[index,],offsprings)
-  return(next_generation)
-}
+get_next_population <- function(parents, offsprings, scheme, pct=NULL){
+  #' Generate next population
+  #'
+  #' @author Xiao Li
+  #'
+  #' @description get_next_population generate next population to use based on two methods.
+  #' The first method is to replace the worst certain percent of original population by offsprings.
+  #' The second method is to combine all parents and offsprings, and then choose the top individuals.
+  #'
+  #' @param parents a data frame contains the original population
+  #' @param offsprings a data frame contains all offsprings
+  #' @param scheme "proportion" returns the first method and "re-rank" returns the second method
+  #' @param pct it is used to first method to determine the proportion of original population to be replaced
+  #'
 
+  if(!is.data.frame(parents)){
+    stop("parents should be a data frame")
+  }
 
-replace_population2 <- function(parents,      # Generation t
-                                offsprings    # Generation t+1
-                                ){
-  total_population <- rbind(parents,offsprings)
-  index <- order(total_population$goodness_of_fit,decreasing = T)
-  next_index <- index[1:length(parents)]
-  next_generation <- total_population[next_index,]
-  return(next_generation)
+  if(!is.data.frame(offsprings)){
+    stop("offsprings should be a data frame")
+  }
+
+  if(scheme!="proportion" || scheme!="re-rank"){
+    stop("scheme should be either \"proportion\" or \"re-rank\" ")
+  }
+
+  if(pct < 0 || pct > 1){
+    stop("pct should a number between 0 and 1")
+  }
+
+  next_population <- c()
+  if(scheme=="proportion"){
+    goodness_order <- order(parents$goodness_of_fit,decreasing = F)
+    index <- goodness_order[1:(length(goodness_order)*(1-pct))]
+    next_population <- rbind(parents[index,],offsprings)
+  }
+
+  if(scheme=="re-rank"){
+    total_population <- rbind(parents,offsprings)
+    index <- order(total_population$goodness_of_fit,decreasing = F)
+    next_index <- index[1:length(parents)]
+    next_population <- total_population[next_index,]
+  }
+  return(next_population)
 }
 
 
