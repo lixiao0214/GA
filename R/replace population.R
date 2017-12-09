@@ -31,7 +31,7 @@ get_next_population <- function(parents, offsprings, scheme, pct=NULL){
   if(scheme=="re-rank"){
     total_population <- rbind(parents,offsprings)
     index <- order(total_population$goodness_of_fit,decreasing = F)
-    next_index <- index[1:length(parents)]
+    next_index <- index[1:nrow(parents)]
     next_population <- total_population[next_index,]
   }
   return(next_population)
