@@ -28,7 +28,8 @@ run_one_iteration <- function(main_dataset,
                               method,
                               subsetnum,
                               p,
-                              mutation_rate) {
+                              mutation_rate,
+                              scheme){
   #' Genetic Algorithm - One iteration
   #'
   #' Performs one iteration of our genetic algorithm
@@ -71,8 +72,8 @@ run_one_iteration <- function(main_dataset,
   mutated_offspring <- generate_mutation(input = new_generation,
                                          mutation_rate = mutation_rate,
                                          main_dataset = main_dataset)
-
-  return(mutated_offspring)
+  next_population <- get_next_population(population_new,mutated_offspring,scheme="re-rank")
+  return(next_population)
 }
 
 run_one_iteration(main_dataset = main_dataset,
@@ -83,7 +84,8 @@ run_one_iteration(main_dataset = main_dataset,
                   method = "tournament",
                   subsetnum = 4,
                   p = 2,
-                  mutation_rate = 0.01)
+                  mutation_rate = 0.01,
+                  scheme = "re-rank")
 
 # Modelling
 population = compute_population_goodness_of_fit(data = main_dataset,
