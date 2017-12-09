@@ -1,8 +1,10 @@
 # Importing files
 source("R/modelling.R")
 source("R/mutation.R")
-source("R/selectparent.R")
+# source("selectparent0.R")
+source("R/selectparent1.R")
 source("R/cross_p_split.R")
+source("R/replace population.R")
 
 
 # Generate init dataset
@@ -25,12 +27,12 @@ population = compute_population_goodness_of_fit(data = main_dataset,
 
 
 # Parent selection
-selectparents(originalparents = as.matrix(population)[, 1:10],
-              couplenum = 10,
-              method = 'tournament',
-              fitness = population[,"goodness_of_fit"],
-              subsetnum = 4
-              )
+selected_parents <- selectparents(originalparents = as.matrix(population)[, 1:10],
+                                  couplenum = 10,
+                                  method = 'tournament',
+                                  fitness = population[,"goodness_of_fit"],
+                                  subsetnum = 4
+                                  )
 
 # Sample selected parents
 selected_parents <- list(as.data.frame(matrix(rbinom(n = 20, prob = .5, size = 1), ncol = 10, nrow = 2)),
@@ -40,4 +42,7 @@ selected_parents <- list(as.data.frame(matrix(rbinom(n = 20, prob = .5, size = 1
 new_generation <- crossover_p_split(parents = selected_parents, p = 2)
 mutated_offspring <- generate_mutation(input = new_generation, mutation_rate = .01,
                                        main_dataset = main_dataset)
+get_next_population(population_new,mutated_offspring,scheme="re-rank")
+
+
 

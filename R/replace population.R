@@ -21,14 +21,6 @@ get_next_population <- function(parents, offsprings, scheme, pct=NULL){
     stop("offsprings should be a data frame")
   }
 
-  if(scheme!="proportion" || scheme!="re-rank"){
-    stop("scheme should be either \"proportion\" or \"re-rank\" ")
-  }
-
-  if(pct < 0 || pct > 1){
-    stop("pct should a number between 0 and 1")
-  }
-
   next_population <- c()
   if(scheme=="proportion"){
     goodness_order <- order(parents$goodness_of_fit,decreasing = F)
