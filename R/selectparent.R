@@ -37,9 +37,9 @@ twopropselection <- function(originalparents, couplenum, fitness){
   #'and to select the other parent completely at random
   #' Returns the selected parents ~ list
   #' @author Lei Zhang
-  #' @param originalparents : a casenum * variablenum matrix
-  #' @param couplenum : number of couples selected
-  #' @param fitness: goodness of fit ~ a casenum * 1 vector , default is AICvalue
+  #' @param originalparents a casenum * variablenum matrix
+  #' @param couplenum number of couples selected
+  #' @param fitness goodness of fit ~ a casenum * 1 vector , default is AICvalue
   #' @example twopropselection(originalparents = firstgeneration, couplenum = 5, fitness = AICvalue)
 
   stopifnot(is.matrix(originalparents))
@@ -67,9 +67,9 @@ onepropselection <- function(originalparents, couplenum, fitness){
   #'
   #' @return Returns the selected parents ~ list
   #' @author Lei Zhang
-  #' @param originalparents : a casenum * variablenum matrix
-  #' @param couplenum : number of couples selected
-  #' @param fitness: goodness of fit ~ a casenum * 1 vector , default is AICvalue
+  #' @param originalparents a casenum * variablenum matrix
+  #' @param couplenum number of couples selected
+  #' @param fitness goodness of fit ~ a casenum * 1 vector , default is AICvalue
   #' @example onepropselection(originalparents = firstgeneration, couplenum = 5, fitness = AICvalue)
 
   stopifnot(is.matrix(originalparents))
@@ -95,10 +95,10 @@ tournament <- function(originalparents, couplenum, subsetnum, fitness){
   #' been generated.Parents are then paired randomly for breeding.
   #' Returns the selected parents ~ list
   #' @author Lei Zhang
-  #' @param originalparents : a casenum * variablenum matrix
-  #' @param couplenum : number of couples selected
-  #' @param subsetnum : partition the set of chromosomes in generation t into "subsetnum" disjoint subsets
-  #' @param fitness: goodness of fit ~ a casenum * 1 vector , default is AICvalue
+  #' @param originalparents a casenum * variablenum matrix
+  #' @param couplenum number of couples selected
+  #' @param subsetnum partition the set of chromosomes in generation t into "subsetnum" disjoint subsets
+  #' @param fitness goodness of fit ~ a casenum * 1 vector , default is AICvalue
   #' @example tournament(originalparents = firstgeneration, couplenum = 5, fitness = AICvalue, subsetnum = 5 )
 
   stopifnot(is.matrix(originalparents))
@@ -139,8 +139,8 @@ tournament <- function(originalparents, couplenum, subsetnum, fitness){
 getrankfitness <- function(fitness, reverse = TRUE){
   #' calculate the fitness based on the objective function's rank
   #' @author Lei Zhang
-  #' @param fitness: goodness of fit ~ a casenum * 1 vector , default is AICvalue
-  #' @param reverse: whether we need to reverse the order when we rank the values in fitness, depends on whether the higher the value in the "fitness" vector , the better the fitness
+  #' @param fitness goodness of fit ~ a casenum * 1 vector , default is AICvalue
+  #' @param reverse whether we need to reverse the order when we rank the values in fitness, depends on whether the higher the value in the "fitness" vector , the better the fitness
   #' @example getrankfitness(fitness = AICvalue, reverse = TRUE); getrankfitness(fitness = Rsquare, reverse = FALSE)
 
   stopifnot(is.vector(fitness))
@@ -158,10 +158,10 @@ selectparents <- function(originalparents, couplenum, method, fitness, subsetnum
   #' Three different methods are provided: "twopropselection", "onepropselection" and "tournament"
   #' @author Lei Zhang
   #' @param originalparents is a casenum * variablenum matrix
-  #' @param couplenum: number of couples selected
-  #' @param method: the method to select the parents, "twopropselection", "onepropselection" or "tournament"
-  #' @param fitness: goodness of fit ~ a casenum * 1 vector , default is AICvalue
-  #' @param subsetnum : In method "tournament", we partition the set of chromosomes in generation t into "subsetnum" disjoint subsets
+  #' @param couplenum number of couples selected
+  #' @param method the method to select the parents, "twopropselection", "onepropselection" or "tournament"
+  #' @param fitness goodness of fit ~ a casenum * 1 vector , default is AICvalue
+  #' @param subsetnum: In method "tournament", we partition the set of chromosomes in generation t into "subsetnum" disjoint subsets
   #' @example selectparents(originalparents = x, couplenum = 10, method = "tournament", fitness=AICvalue, subsetnum = 5 )
 
   stopifnot(is.matrix(originalparents))
