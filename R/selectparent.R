@@ -161,7 +161,7 @@ selectparents <- function(originalparents, couplenum, method, fitness, subsetnum
   #' @param couplenum number of couples selected
   #' @param method the method to select the parents, "twopropselection", "onepropselection" or "tournament"
   #' @param fitness goodness of fit ~ a casenum * 1 vector , default is AICvalue
-  #' @param subsetnum: In method "tournament", we partition the set of chromosomes in generation t into "subsetnum" disjoint subsets
+  #' @param subsetnum In method "tournament", we partition the set of chromosomes in generation t into "subsetnum" disjoint subsets
   #' @example selectparents(originalparents = x, couplenum = 10, method = "tournament", fitness=AICvalue, subsetnum = 5 )
 
   stopifnot(is.matrix(originalparents))

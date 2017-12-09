@@ -2,7 +2,7 @@
 % Please edit documentation in R/modelling.R
 \name{compute_population_goodness_of_fit}
 \alias{compute_population_goodness_of_fit}
-\title{Compute Population AIC}
+\title{Compute Population Goodness of Fit}
 \usage{
 compute_population_goodness_of_fit(data, population, regression_target,
   criterion = "AIC", verbose = FALSE)
@@ -16,8 +16,11 @@ compute_population_goodness_of_fit(data, population, regression_target,
 
 \item{criterion}{character: goodness of fit criterion}
 }
+\value{
+Returns the goodness of fit for the given population
+}
 \description{
-Returns the goodness-of-fit for the given population
+Returns the goodness of fit for the given population
 }
 \author{
 Louis Rémus
