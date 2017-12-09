@@ -33,6 +33,7 @@ one_ieteration<-function(data, population, p, mutation_rate){
 main<-function(data, population, p, mutation_rate){
   AIC<-list()
   iteration<-1
+  error <- 1
   while(iteration<=1000 && error>0.0001){
 #    old_AIC<-mutated_offspring[,dim(mutated_offspring)[2]]
 #    population<-mutated_offspring[,1:(dim(mutated_offspring)[2]-1)]

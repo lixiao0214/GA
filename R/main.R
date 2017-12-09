@@ -2,7 +2,7 @@
 source("R/modelling.R")
 source("R/mutation.R")
 # source("selectparent0.R")
-source("R/selectparent1.R")
+source("R/selectparent.R")
 source("R/cross_p_split.R")
 source("R/replace population.R")
 
