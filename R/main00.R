@@ -1,3 +1,11 @@
+# Importing files
+source("R/modelling.R")
+source("R/mutation.R")
+# source("selectparent0.R")
+source("R/selectparent.R")
+source("R/cross_p_split.R")
+source("R/replace population.R")
+
 # Generate init dataset
 main_dataset <- as.data.frame.matrix(crimtab[, 1:10])
 names(main_dataset) <- c('col_1', 'col_2', 'col_3', 'col_4', 'col_5', 'col_6', 'col_7', 'col_8', 'col_9', 'col_10')
@@ -56,9 +64,15 @@ main<-function(data, population, p, mutation_rate){
   return(AIC)
 }
 
-main(data=main_dataset, population =population, p=2, mutation_rate = 0.01)
+m <- main(data=main_dataset, population =population, p=2, mutation_rate = 0.01)
+mm <- matrix(unlist(m),nrow = 6)
+pts <- data.frame()
+for(i in 1:nrow(mm)){
+  pts <- rbind(pts,data.frame(x=rep(i,length(mm[i,])),y=mm[i,]))
+}
+pts
 
-
-
-
-
+library(ggplot2)
+ggplot(data = pts, aes(x=x,y=y)) +
+  geom_point() +
+  geom_smooth()
