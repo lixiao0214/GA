@@ -7,11 +7,11 @@
 twopropselection(originalparents, couplenum, fitness)
 }
 \arguments{
-\item{originalparents}{: a casenum * variablenum matrix}
+\item{originalparents}{a casenum * variablenum matrix}
 
-\item{couplenum}{: number of couples selected}
+\item{couplenum}{number of couples selected}
 
-\item{fitness:}{goodness of fit ~ a casenum * 1 vector , default is AICvalue}
+\item{fitness}{goodness of fit ~ a casenum * 1 vector , default is AICvalue}
 }
 \description{
 Select one parent with probability proportional to fitness(or fitnessrank)

@@ -13,13 +13,13 @@ Returns the selected parents ~ list}
 tournament(originalparents, couplenum, subsetnum, fitness)
 }
 \arguments{
-\item{originalparents}{: a casenum * variablenum matrix}
+\item{originalparents}{a casenum * variablenum matrix}
 
-\item{couplenum}{: number of couples selected}
+\item{couplenum}{number of couples selected}
 
-\item{subsetnum}{: partition the set of chromosomes in generation t into "subsetnum" disjoint subsets}
+\item{subsetnum}{partition the set of chromosomes in generation t into "subsetnum" disjoint subsets}
 
-\item{fitness:}{goodness of fit ~ a casenum * 1 vector , default is AICvalue}
+\item{fitness}{goodness of fit ~ a casenum * 1 vector , default is AICvalue}
 }
 \description{
 Method : tournament selection

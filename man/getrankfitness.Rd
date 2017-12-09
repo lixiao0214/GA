@@ -7,9 +7,9 @@
 getrankfitness(fitness, reverse = TRUE)
 }
 \arguments{
-\item{fitness:}{goodness of fit ~ a casenum * 1 vector , default is AICvalue}
+\item{fitness}{goodness of fit ~ a casenum * 1 vector , default is AICvalue}
 
-\item{reverse:}{whether we need to reverse the order when we rank the values in fitness, depends on whether the higher the value in the "fitness" vector , the better the fitness}
+\item{reverse}{whether we need to reverse the order when we rank the values in fitness, depends on whether the higher the value in the "fitness" vector , the better the fitness}
 }
 \description{
 calculate the fitness based on the objective function's rank

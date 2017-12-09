@@ -10,13 +10,13 @@ selectparents(originalparents, couplenum, method, fitness, subsetnum = NULL)
 \arguments{
 \item{originalparents}{is a casenum * variablenum matrix}
 
-\item{subsetnum}{: In method "tournament", we partition the set of chromosomes in generation t into "subsetnum" disjoint subsets}
+\item{couplenum}{number of couples selected}
 
-\item{couplenum:}{number of couples selected}
+\item{method}{the method to select the parents, "twopropselection", "onepropselection" or "tournament"}
 
-\item{method:}{the method to select the parents, "twopropselection", "onepropselection" or "tournament"}
+\item{fitness}{goodness of fit ~ a casenum * 1 vector , default is AICvalue}
 
-\item{fitness:}{goodness of fit ~ a casenum * 1 vector , default is AICvalue}
+\item{subsetnum}{In method "tournament", we partition the set of chromosomes in generation t into "subsetnum" disjoint subsets}
 }
 \description{
 In this selection mechanism, parents are chosen to produce offspring in the next stage.
