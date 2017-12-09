@@ -18,6 +18,7 @@ regression_target <- 'col_1'
 # Make sure we always have the regression_target column
 population[regression_target] = 1
 
+run_one_iteration <- function(main_dataset, population, regression_target, criterion, )
 # Modelling
 population = compute_population_goodness_of_fit(data = main_dataset,
                                                     population = population,
