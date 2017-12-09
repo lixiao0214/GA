@@ -15,6 +15,7 @@ check_input <- function(input) {
   #' @param input list of data.frames
   #' @examples
   #' check_input(input = list(data.frame(a=1), data.frame(b=2)))
+  #' @return Nothing
   stopifnot(is.list(input))
   lapply(input, stopifnot(is.data.frame))
 }
@@ -24,15 +25,20 @@ get_goodness_of_fit <- function(df, regression_target, criterion = "AIC") {
   #' Goodness of Fit
   #'
   #' Returns the goodness-of-fit for regression_target ~ df
+  #'
   #' @author Louis Rémus
   #' @param df data.frame: regression_target and covariates
   #' @param regression_target character: column of df regressed on other covariates in df
   #' @param criterion character: goodness of fit criterion
   #' @example get_goodness_of_fit(df = subset_data, regression_target = regression_target, criterion = "AIC")
+  #' @return Goodness of fit value for the given regression problem
 
   stopifnot(is.data.frame(df))
   stopifnot(is.character(regression_target))
   stopifnot(is.character(criterion))
+
+  # Get the function
+  criterion_function <- match.fun(criterion)
 
   # list of covariates
   col_names <- names(df)
@@ -41,22 +47,16 @@ get_goodness_of_fit <- function(df, regression_target, criterion = "AIC") {
   # Build the formula
   formula <- as.formula(paste(regression_target, "~", paste(col_names, collapse = " + ")))
   lm_fit <- lm(formula = formula, data = df)
-  if (criterion == "AIC") {
-    goodness_of_fit <- AIC(lm_fit)
-    # Quick check
-    stopifnot(all.equal(goodness_of_fit, AIC(logLik(lm_fit))))
-  }
-  else {
-    stop("Unknown goodness of fit criterion")
-  }
+
+  goodness_of_fit <- criterion_function(lm_fit)
   return(goodness_of_fit)
-}
+  }
 
 compute_population_goodness_of_fit <- function(data, population, regression_target,
                                                criterion = "AIC", verbose = FALSE) {
-  #' Compute Population AIC
+  #' Compute Population Goodness of Fit
   #'
-  #' Returns the goodness-of-fit for the given population
+  #' Returns the goodness of fit for the given population
   #' @author Louis Rémus
   #' @param data data.frame: regression_target and covariates
   #' @param population data.frame: selected column per element of the population
@@ -64,12 +64,14 @@ compute_population_goodness_of_fit <- function(data, population, regression_targ
   #' @param criterion character: goodness of fit criterion
   #' @example
   #' population_new = compute_population_goodness_of_fit(data = main_dataset, population = population, regression_target = 'col_1')
+  #' @return Returns the goodness of fit for the given population
 
 
   stopifnot(is.data.frame(data))
   stopifnot(is.data.frame(population))
   stopifnot(is.character(regression_target))
   stopifnot(is.character(criterion))
+
   # Make sure we always have the regression_target column
   stopifnot(all(population[regression_target] == 1))
 
@@ -106,7 +108,7 @@ regression_target <- "col_1"
 # Make sure we always have the regression_target column in our regressions
 population[regression_target] = 1
 
-population_new = compute_population_goodness_of_fit(data = main_dataset,
+population_new <- compute_population_goodness_of_fit(data = main_dataset,
                                                     population = population,
                                                     regression_target = 'col_1')
 

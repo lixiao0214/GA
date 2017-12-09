@@ -13,6 +13,9 @@ get_goodness_of_fit(df, regression_target, criterion = "AIC")
 
 \item{criterion}{character: goodness of fit criterion}
 }
+\value{
+Goodness of fit value for the given regression problem
+}
 \description{
 Returns the goodness-of-fit for regression_target ~ df
 }

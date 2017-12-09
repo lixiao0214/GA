@@ -9,6 +9,9 @@ check_input(input)
 \arguments{
 \item{input}{list of data.frames}
 }
+\value{
+Nothing
+}
 \description{
 Checks whether the input is the appropriate format
 }
