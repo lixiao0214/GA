@@ -85,7 +85,7 @@ run_one_iteration(main_dataset = main_dataset,
                   subsetnum = 4,
                   p = 2,
                   mutation_rate = 0.01,
-                  scheme = "re-rank")
+                  scheme = "proportion")
 
 # Modelling
 population = compute_population_goodness_of_fit(data = main_dataset,

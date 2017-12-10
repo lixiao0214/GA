@@ -1,4 +1,4 @@
-get_next_population <- function(parents, offsprings, scheme, pct=NULL){
+get_next_population <- function(parents, offsprings, scheme){
   #' Generate next population
   #'
   #' @author Xiao Li
@@ -23,8 +23,9 @@ get_next_population <- function(parents, offsprings, scheme, pct=NULL){
 
   next_population <- c()
   if(scheme=="proportion"){
+    pct <- nrow(offsprings)/nrow(parents)
     goodness_order <- order(parents$goodness_of_fit,decreasing = F)
-    index <- goodness_order[1:(length(goodness_order)*(1-pct))]
+    index <- goodness_order[1:round(length(goodness_order)*(1-pct))]
     next_population <- rbind(parents[index,],offsprings)
   }
 
