@@ -25,8 +25,8 @@ generate_mutation <- function(input,
   #' main_dataset <- toy_datasets$main_dataset
   #' population <- toy_datasets$population
   #' generate_mutation(population, 0.01, main_dataset)
-
-  stopifnot(is.data.frame(input))
+  browser()
+  stopifnot(is.matrix(input))
   stopifnot(is.data.frame(main_dataset))
 
   if (mutation_rate < 0 || mutation_rate > 1) {
@@ -36,7 +36,7 @@ generate_mutation <- function(input,
   # Generate a copy of the input without regression_target
   col_names <- names(main_dataset)
   col_names <- col_names[col_names != regression_target]
-  after_mutation <- input[, col_names]
+  after_mutation <- input
 
   # Perform mutation
   rand <- runif(length(after_mutation))
@@ -44,7 +44,8 @@ generate_mutation <- function(input,
   after_mutation[index] <- abs(after_mutation[index] - 1)
 
   # Create df_mutation data.frame
-  df_mutation <- after_mutation
+  df_mutation <- as.data.frame(after_mutation)
+  names(df_mutation) <- col_names
 
   # Make sure we always have the regression_target column
   df_mutation[regression_target] = 1
@@ -70,6 +71,12 @@ toy_datasets <- generate_toy_dataset(n_cols = n_cols,
 main_dataset <- toy_datasets$main_dataset
 population <- toy_datasets$population
 
-generate_mutation(input = population, mutation_rate = 0.2,
-                  main_dataset = main_dataset, regression_target = "V1")
+col_names <- names(population)
+col_names <- col_names[col_names != regression_target]
+new_population <- population[, col_names]
+
+generate_mutation(input = as.matrix(new_population),
+                  mutation_rate = 0.2,
+                  main_dataset = main_dataset,
+                  regression_target = "V1")
 

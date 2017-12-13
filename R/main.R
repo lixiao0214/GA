@@ -62,7 +62,6 @@ run_one_iteration <- function(main_dataset,
                                     fitness = population[, "goodness_of_fit"],
                                     subsetnum = subsetnum
   )
-  browser()
   # Crossover & Mutation
   new_generation <- crossover_p_split(parents = selected_parents,
                                       p = p)
