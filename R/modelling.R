@@ -33,6 +33,7 @@ get_goodness_of_fit <- function(df, regression_target, criterion = "AIC") {
   #' @example get_goodness_of_fit(df = subset_data, regression_target = regression_target, criterion = "AIC")
   #' @return Goodness of fit value for the given regression problem
 
+
   stopifnot(is.data.frame(df))
   stopifnot(is.character(regression_target))
   stopifnot(is.character(criterion))
@@ -66,7 +67,7 @@ compute_population_goodness_of_fit <- function(data, population, regression_targ
   #' population_new = compute_population_goodness_of_fit(data = main_dataset, population = population, regression_target = 'col_1')
   #' @return Returns the goodness of fit for the given population
 
-
+  # browser()
   stopifnot(is.data.frame(data))
   stopifnot(is.data.frame(population))
   stopifnot(is.character(regression_target))
@@ -74,6 +75,8 @@ compute_population_goodness_of_fit <- function(data, population, regression_targ
 
   # Make sure we always have the regression_target column
   stopifnot(all(population[regression_target] == 1))
+  # Make sure there is more than one column
+  stopifnot(dim(data)[2] > 1)
 
   col_names <- names(population)
   # Cast columns type to numeric
@@ -87,6 +90,11 @@ compute_population_goodness_of_fit <- function(data, population, regression_targ
   goodness_of_fit_values <- sapply(1:nrow(population), function(i){
     if (verbose) print(paste("Processing element:", i))
     selected_columns <- as.logical(population[i, ])
+    if (sum(selected_columns) == 1) {
+      # We have only one column
+      print("Only one column in regression data.frame, exiting.")
+      stop()
+    }
     subset_data <- main_dataset[, selected_columns]
     return(get_goodness_of_fit(df = subset_data, regression_target = regression_target, criterion = criterion))
   })
@@ -94,13 +102,28 @@ compute_population_goodness_of_fit <- function(data, population, regression_targ
   return(population)
 }
 
+generate_toy_dataset <- function(ncol = 100, ncol = 7, regression_target = "col_1") {
+  #' Generate a toy dataset
+  #'
+  #' Returns the goodness-of-fit for regression_target ~ df
+  #'
+  #' @author Louis Rémus
+  #' @param df data.frame: regression_target and covariates
+  #' @param regression_target character: column of df regressed on other covariates in df
+  #' @param criterion character: goodness of fit criterion
+  #' @example get_goodness_of_fit(df = subset_data, regression_target = regression_target, criterion = "AIC")
+  #' @return Goodness of fit value for the given regression problem
+  stopifnot(is.character(regression_target))
+}
+
+
 # Testing
 # Generate init dataset
-main_dataset <- as.data.frame.matrix(crimtab[, 1:10])
-names(main_dataset) <- c('col_1', 'col_2', 'col_3', 'col_4', 'col_5', 'col_6', 'col_7', 'col_8', 'col_9', 'col_10')
+main_dataset <- as.data.frame.matrix(crimtab[, 1:5])
+names(main_dataset) <- c('col_1', 'col_2', 'col_3', 'col_4', 'col_5')
 
-population <- as.data.frame(matrix(rbinom(n = 300, prob = .5, size = 1), ncol = 10))
-names(population) <- c('col_1', 'col_2', 'col_3', 'col_4', 'col_5', 'col_6', 'col_7', 'col_8', 'col_9', 'col_10')
+population <- as.data.frame(matrix(rbinom(n = 300, prob = .5, size = 1), ncol = 5))
+names(population) <- c('col_1', 'col_2', 'col_3', 'col_4', 'col_5')
 
 # Parameters
 regression_target <- "col_1"
@@ -110,5 +133,6 @@ population[regression_target] = 1
 
 population_new <- compute_population_goodness_of_fit(data = main_dataset,
                                                     population = population,
-                                                    regression_target = 'col_1')
-
+                                                    regression_target = 'col_1',
+                                                    verbose = TRUE)
+population
