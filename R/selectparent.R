@@ -31,16 +31,16 @@
 ###method one : select one parent with probability proportional to fitness(or fitnessrank)
 ###and to select the other parent completely at random
 twopropselection <- function(originalparents, couplenum, fitness){
-  #' Method : twopropselection
+  #' twopropselection
   #'
   #' Select one parent with probability proportional to fitness(or fitnessrank)
   #'and to select the other parent completely at random
-  #' Returns the selected parents ~ list
+  #' @return Returns the selected parents ~ list
   #' @author Lei Zhang
   #' @param originalparents a casenum * variablenum matrix
   #' @param couplenum number of couples selected
   #' @param fitness goodness of fit ~ a casenum * 1 vector , default is AICvalue
-  #' @example twopropselection(originalparents = firstgeneration, couplenum = 5, fitness = AICvalue)
+  #' @example twopropselection(originalparents = matrix(rep(c(1,0,0,1),5), nrow = 5), couplenum = 5, fitness = c(1,2,3,4,5))
 
   stopifnot(is.matrix(originalparents))
   stopifnot(is.numeric(couplenum))
@@ -60,7 +60,7 @@ twopropselection <- function(originalparents, couplenum, fitness){
 
 
 onepropselection <- function(originalparents, couplenum, fitness){
-  #' Method : onepropselection
+  #' onepropselection
   #'
   #' Select one parent with probability proportional to fitness and to select
   #' the other parent completely at random
@@ -70,7 +70,7 @@ onepropselection <- function(originalparents, couplenum, fitness){
   #' @param originalparents a casenum * variablenum matrix
   #' @param couplenum number of couples selected
   #' @param fitness goodness of fit ~ a casenum * 1 vector , default is AICvalue
-  #' @example onepropselection(originalparents = firstgeneration, couplenum = 5, fitness = AICvalue)
+  #' @example onepropselection(originalparents = matrix(rep(c(1,0,0,1),5), nrow = 5), couplenum = 5, fitness = c(1,2,3,4,5))
 
   stopifnot(is.matrix(originalparents))
   stopifnot(is.numeric(couplenum))
@@ -87,19 +87,21 @@ onepropselection <- function(originalparents, couplenum, fitness){
 }
 
 tournament <- function(originalparents, couplenum, subsetnum, fitness){
-  #' Method : tournament selection
+  #' tournament selection
+  #'
   #' the set of parents in generation t is randomly partitioned into k disjoint
   #' subsets of equal size(perhaps with a few remaining parents temporarily ignored)
   #' The best individual in each group is chosen as a parent.
   #' Additional random partitionings are carried out until sufficient parents have
   #' been generated.Parents are then paired randomly for breeding.
-  #' Returns the selected parents ~ list
+  #'
+  #' @return Returns the selected parents ~ list
   #' @author Lei Zhang
   #' @param originalparents a casenum * variablenum matrix
   #' @param couplenum number of couples selected
   #' @param subsetnum partition the set of chromosomes in generation t into "subsetnum" disjoint subsets
   #' @param fitness goodness of fit ~ a casenum * 1 vector , default is AICvalue
-  #' @example tournament(originalparents = firstgeneration, couplenum = 5, fitness = AICvalue, subsetnum = 5 )
+  #' @example tournament(originalparents = matrix(rep(c(1,0,0,1),5), nrow = 5), couplenum = 5, fitness = c(1,2,3,4,5), subsetnum = 2)
 
   stopifnot(is.matrix(originalparents))
   stopifnot(is.numeric(couplenum))
@@ -137,7 +139,10 @@ tournament <- function(originalparents, couplenum, subsetnum, fitness){
 
 ###calculate the fitness based on rank
 getrankfitness <- function(fitness, reverse = TRUE){
-  #' calculate the fitness based on the objective function's rank
+  #' calculate rank-based fitness
+  #'
+  #' getrankfitness calculates the fitness based on the objective function's rank
+  #'
   #' @author Lei Zhang
   #' @param fitness goodness of fit ~ a casenum * 1 vector , default is AICvalue
   #' @param reverse whether we need to reverse the order when we rank the values in fitness, depends on whether the higher the value in the "fitness" vector , the better the fitness
@@ -154,8 +159,11 @@ getrankfitness <- function(fitness, reverse = TRUE){
 
 ###Select parents based on the parameters
 selectparents <- function(originalparents, couplenum, method, fitness, subsetnum = NULL ){
+  #' select parents in the genetic algorithms
+  #'
   #' In this selection mechanism, parents are chosen to produce offspring in the next stage.
   #' Three different methods are provided: "twopropselection", "onepropselection" and "tournament"
+  #' @return Returns the selected parents ~ list
   #' @author Lei Zhang
   #' @param originalparents is a casenum * variablenum matrix
   #' @param couplenum number of couples selected
