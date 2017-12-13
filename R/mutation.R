@@ -1,6 +1,7 @@
 generate_mutation <- function(input,
                               mutation_rate,
-                              main_dataset){
+                              regression_target,
+                              df){
   #' Generate offsprings after mutation
   #'
   #' @description generate_mutation is used to generate offsprings after mutations based on particular mutation rate.
@@ -36,6 +37,7 @@ generate_mutation <- function(input,
   }
 
   # Generate a copy of the input
+  regression_index <- which(colnames(df)==regression_target)
   after_mutation <- input
 
   # The logic of this for loop:
@@ -45,19 +47,14 @@ generate_mutation <- function(input,
   # If the random number is smaller than the mutation number
   # The corresponding gene will mutate
   # Otherwise, the value will stay the same
-  for (i in length(input)) {
-    u <- runif(1)
-    if (u <= mutation_rate) {
-      after_mutation[i] <- abs(after_mutation[i] - 1)
-    }
-  }
-  df_mutation <- as.data.frame(after_mutation)
-  names(df_mutation) <- c('col_1', 'col_2', 'col_3', 'col_4', 'col_5','col_6', 'col_7', 'col_8', 'col_9', 'col_10')
-  regression_target <- "col_1"
-  df_mutation[regression_target] = 1
-  offsprings <- compute_population_goodness_of_fit(data = main_dataset,
-                                                   population = df_mutation,
-                                                   regression_target = 'col_1')
+  rand <- runif(length(after_mutation))
+  index <- which(rand < mutation_rate)
+  after_mutation[index] <- abs(after_mutation[index]-1)
+  after_mutation[,regression_index] <- 1
+
+  offsprings <- as.data.frame(after_mutation)
+  colnames(offsprings) <- colnames(df)
+
   return(offsprings)
 }
 
