@@ -25,7 +25,7 @@ generate_mutation <- function(input,
   #' main_dataset <- toy_datasets$main_dataset
   #' population <- toy_datasets$population
   #' generate_mutation(population, 0.01, main_dataset)
-  # browser()
+  browser()
   stopifnot(is.matrix(input))
   stopifnot(is.data.frame(main_dataset))
 
@@ -48,12 +48,12 @@ generate_mutation <- function(input,
   names(df_mutation) <- col_names
 
   # Make sure we always have the regression_target column
-  df_mutation[regression_target] = 1
+  # df_mutation[regression_target] = 1
 
   offsprings <- compute_population_goodness_of_fit(data = main_dataset,
                                                    population = df_mutation,
                                                    regression_target = regression_target,
-                                                   verbose=TRUE)
+                                                   verbose = TRUE)
   return(offsprings)
 }
 
@@ -72,11 +72,7 @@ toy_datasets <- generate_toy_dataset(n_cols = n_cols,
 main_dataset <- toy_datasets$main_dataset
 population <- toy_datasets$population
 
-col_names <- names(population)
-col_names <- col_names[col_names != regression_target]
-new_population <- population[, col_names]
-
-generate_mutation(input = as.matrix(new_population),
+generate_mutation(input = as.matrix(population),
                   mutation_rate = 0.2,
                   main_dataset = main_dataset,
                   regression_target = "V1")

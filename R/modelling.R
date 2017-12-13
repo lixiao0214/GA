@@ -76,9 +76,9 @@ compute_population_goodness_of_fit <- function(data, population, regression_targ
   stopifnot(is.character(criterion))
 
   # Make sure we always have the regression_target column
-  stopifnot(all(population[regression_target] == 1))
-  # Make sure there is more than one column
-  stopifnot(dim(data)[2] > 1)
+  # stopifnot(all(population[regression_target] == 1))
+  # Make sure there is more than zeros column
+  stopifnot(dim(data)[2] > 0)
 
   col_names <- names(population)
   # Cast columns type to numeric
@@ -92,10 +92,12 @@ compute_population_goodness_of_fit <- function(data, population, regression_targ
   goodness_of_fit_values <- sapply(1:nrow(population), function(i){
     if (verbose) print(paste("Processing element:", i))
     selected_columns <- names(population)[which(population[i, ] == 0)]
-    if (length(selected_columns) == 1) {
+    if (length(selected_columns) == dim(population)[2]) {
+      browser()
       # We have only one column
-      stop("Only one column in regression data.frame")
+      stop("Zero column in regression data.frame")
     }
+    selected_columns <- c(selected_columns, regression_target)
     subset_data <- main_dataset[, selected_columns]
     return(get_goodness_of_fit(df = subset_data, regression_target = regression_target, criterion = criterion))
   })
@@ -124,7 +126,7 @@ generate_toy_dataset <- function(n_cols = 7, n_rows = 100, n_population = 100, r
   population <- as.data.frame(matrix(rbinom(n = n_population * n_cols, prob = .5, size = 1), ncol = n_cols))
 
   # Make sure we always have the regression_target column in our regressions
-  population[regression_target] = 1
+  # population[regression_target] = 1
 
   # Make sure we do not have rows with sum of bool = 1 (means no regression)
   if (any(rowSums(population) <= 1)) {
