@@ -25,7 +25,7 @@ generate_mutation <- function(input,
   #' main_dataset <- toy_datasets$main_dataset
   #' population <- toy_datasets$population
   #' generate_mutation(population, 0.01, main_dataset)
-  browser()
+  # browser()
   stopifnot(is.matrix(input))
   stopifnot(is.data.frame(main_dataset))
 
@@ -52,7 +52,8 @@ generate_mutation <- function(input,
 
   offsprings <- compute_population_goodness_of_fit(data = main_dataset,
                                                    population = df_mutation,
-                                                   regression_target = regression_target)
+                                                   regression_target = regression_target,
+                                                   verbose=TRUE)
   return(offsprings)
 }
 

@@ -91,7 +91,7 @@ compute_population_goodness_of_fit <- function(data, population, regression_targ
 
   goodness_of_fit_values <- sapply(1:nrow(population), function(i){
     if (verbose) print(paste("Processing element:", i))
-    selected_columns <- names(population)[which(population[i, ] == 1)]
+    selected_columns <- names(population)[which(population[i, ] == 0)]
     if (length(selected_columns) == 1) {
       # We have only one column
       stop("Only one column in regression data.frame")
@@ -135,7 +135,7 @@ generate_toy_dataset <- function(n_cols = 7, n_rows = 100, n_population = 100, r
     population[, col_names][rowSums(population[, col_names]) == 0, 1] = 1
   }
 
-  return(list(population = population,
+  return(list(population = population[, col_names],
               main_dataset = main_dataset))
 }
 
@@ -154,6 +154,7 @@ toy_datasets <- generate_toy_dataset(n_cols = n_cols,
                                      regression_target = regression_target)
 main_dataset <- toy_datasets$main_dataset
 population <- toy_datasets$population
+
 
 population_new <- compute_population_goodness_of_fit(data = main_dataset,
                                                     population = population,
