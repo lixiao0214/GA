@@ -1,24 +1,25 @@
 # Importing files
 source("R/modelling.R")
 source("R/mutation.R")
-# source("selectparent0.R")
 source("R/selectparent.R")
 source("R/cross_p_split.R")
 source("R/replace population.R")
 
 
-# Generate init dataset
-main_dataset <- as.data.frame.matrix(crimtab[, 1:10])
-names(main_dataset) <- c('col_1', 'col_2', 'col_3', 'col_4', 'col_5', 'col_6', 'col_7', 'col_8', 'col_9', 'col_10')
-
-population <- as.data.frame(matrix(rbinom(n = 300, prob = .5, size = 1), ncol = 10))
-names(population) <- c('col_1', 'col_2', 'col_3', 'col_4', 'col_5', 'col_6', 'col_7', 'col_8', 'col_9', 'col_10')
-
+# Testing
 # Parameters
-regression_target <- 'col_1'
+regression_target <- "V1"
+n_cols = 8
+n_rows = 100
+n_population = 300
 
-# Make sure we always have the regression_target column
-population[regression_target] = 1
+# Generate init dataset
+toy_datasets <- generate_toy_dataset(n_cols = n_cols,
+                                     n_rows = n_rows,
+                                     n_population = n_population,
+                                     regression_target = regression_target)
+main_dataset <- toy_datasets$main_dataset
+population <- toy_datasets$population
 
 run_one_iteration <- function(main_dataset,
                               population,
@@ -52,19 +53,15 @@ run_one_iteration <- function(main_dataset,
   # Modelling
   population = compute_population_goodness_of_fit(data = main_dataset,
                                                   population = population,
-                                                  regression_target = 'col_1')
+                                                  regression_target = "V1")
 
   # Parent selection
   selected_parents <- selectparents(originalparents = as.matrix(population[, names(population) != "goodness_of_fit"]),
                                     couplenum = couplenum,
                                     method = method,
-                                    fitness = population[,"goodness_of_fit"],
+                                    fitness = population[, "goodness_of_fit"],
                                     subsetnum = subsetnum
   )
-
-  # Sample selected parents
-  # selected_parents <- list(as.data.frame(matrix(rbinom(n = 20, prob = .5, size = 1), ncol = 10, nrow = 2)),
-                           # as.data.frame(matrix(rbinom(n = 20, prob = .5, size = 1), ncol = 10, nrow = 2)))
 
   # Crossover & Mutation
   new_generation <- crossover_p_split(parents = selected_parents,
@@ -72,13 +69,15 @@ run_one_iteration <- function(main_dataset,
   mutated_offspring <- generate_mutation(input = new_generation,
                                          mutation_rate = mutation_rate,
                                          main_dataset = main_dataset)
-  next_population <- get_next_population(population_new,mutated_offspring,scheme="re-rank")
+  next_population <- get_next_population(population_new,
+                                         mutated_offspring,
+                                         scheme = "re-rank")
   return(next_population)
 }
 
 run_one_iteration(main_dataset = main_dataset,
                   population = population,
-                  regression_target = "col_1",
+                  regression_target = "V1",
                   criterion = "BIC",
                   couplenum = 10,
                   method = "tournament",
@@ -86,30 +85,3 @@ run_one_iteration(main_dataset = main_dataset,
                   p = 2,
                   mutation_rate = 0.01,
                   scheme = "proportion")
-
-# Modelling
-population = compute_population_goodness_of_fit(data = main_dataset,
-                                                    population = population,
-                                                    regression_target = 'col_1')
-
-
-# Parent selection
-selected_parents <- selectparents(originalparents = as.matrix(population)[, 1:10],
-                                  couplenum = 10,
-                                  method = 'tournament',
-                                  fitness = population[,"goodness_of_fit"],
-                                  subsetnum = 4
-                                  )
-
-# Sample selected parents
-selected_parents <- list(as.data.frame(matrix(rbinom(n = 20, prob = .5, size = 1), ncol = 10, nrow = 2)),
-                         as.data.frame(matrix(rbinom(n = 20, prob = .5, size = 1), ncol = 10, nrow = 2)))
-
-# Crossover & Mutation
-new_generation <- crossover_p_split(parents = selected_parents, p = 2)
-mutated_offspring <- generate_mutation(input = new_generation, mutation_rate = .01,
-                                       main_dataset = main_dataset)
-next_population <- get_next_population(population_new,mutated_offspring,scheme="re-rank")
-
-
-
