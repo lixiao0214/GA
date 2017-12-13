@@ -38,6 +38,7 @@ generate_mutation <- function(input,
   col_names <- col_names[col_names != regression_target]
   after_mutation <- input[, col_names]
 
+  # Perform mutation
   rand <- runif(length(after_mutation))
   index <- which(rand < mutation_rate)
   after_mutation[index] <- abs(after_mutation[index] - 1)
@@ -45,7 +46,9 @@ generate_mutation <- function(input,
   # Create df_mutation data.frame
   df_mutation <- after_mutation
 
+  # Make sure we always have the regression_target column
   df_mutation[regression_target] = 1
+
   offsprings <- compute_population_goodness_of_fit(data = main_dataset,
                                                    population = df_mutation,
                                                    regression_target = regression_target)
