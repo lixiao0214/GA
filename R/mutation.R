@@ -26,16 +26,11 @@ generate_mutation <- function(input,
   #' population <- toy_datasets$population
   #' generate_mutation(population, 0.01, main_dataset)
 
-  # if (!is.matrix(input)) {
-  #   stop("input should be a matrix.")
-  # }
+  stopifnot(is.data.frame(input))
+  stopifnot(is.data.frame(main_dataset))
 
   if (mutation_rate < 0 || mutation_rate > 1) {
     stop("mutation_rate should be a number between 0 and 1.")
-  }
-
-  if (!is.data.frame(main_dataset)) {
-    stop("main_dataset should be a data frame.")
   }
 
   # Generate a copy of the input without regression_target
@@ -43,19 +38,9 @@ generate_mutation <- function(input,
   col_names <- col_names[col_names != regression_target]
   after_mutation <- input[, col_names]
 
-  # The logic of this for loop:
-  # To make a value change based on a value, I will do following simulation:
-  # Generate a random number from Unif(0,1)
-  # Compare the random number with mutation rate
-  # If the random number is smaller than the mutation number
-  # The corresponding gene will mutate
-  # Otherwise, the value will stay the same
-  for (i in length(input)) {
-    u <- runif(1)
-    if (u <= mutation_rate) {
-      after_mutation[i] <- abs(after_mutation[i] - 1)
-    }
-  }
+  rand <- runif(length(after_mutation))
+  index <- which(rand < mutation_rate)
+  after_mutation[index] <- abs(after_mutation[index] - 1)
 
   # Create df_mutation data.frame
   df_mutation <- after_mutation
