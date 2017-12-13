@@ -1,30 +1,4 @@
 
-###calculate the fitness, the default is AIC
-# getfitness <- function(originalparents, fitfun = NULL){
-#   #originalparents is a casenum * variablenum matrix
-#   #fitness is a casenum * 1 vector , usually it's AICvalue
-#   #fitfun should be a function whose input is originalparents(a casenum * variablenum matrix)
-#   #and its output should be a casenum * 1 vector
-#
-#   if (fitfun = NULL){
-#     #call the AIC function to calculate the AIC value of the originalparents
-#     fitnessvalue <- AIC(originalparents)
-#   }
-#   else{
-#     fitnessvalue <- fitfun(originalparents)
-#
-#   }
-#   return(fitnessvalue)
-# }
-
-#
-# ###some examples of fitfun other than AIC
-# AICrankfit <- function(originalparents){
-#   AICvalue <- AIC(originalparents)
-#   AICrank <- rank(AICvalue)
-#   AICrankfit <- 2 * AICrank/(nrow(originalparents) * (nrow(originalparents)+1))
-#   return(AICrankfit)
-# }
 
 
 
