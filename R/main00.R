@@ -1,16 +1,10 @@
 # Importing files
 source("R/modelling.R")
 source("R/mutation.R")
+# source("selectparent0.R")
 source("R/selectparent.R")
 source("R/cross_p_split.R")
 source("R/replace population.R")
-
-# Generate init dataset
-main_dataset <- as.data.frame(matrix(runif(n = 100 * 8), nrow = 100, ncol = 8))
-
-# Parameters
-# regression_target <- 'col_1'
-
 
 # make one ieteration
 one_iteration<-function(data,
@@ -73,9 +67,8 @@ main<-function(data,
   iteration<-1
   error <- 1
 
-  while(iteration<=500){
-#    old_AIC<-mutated_offspring[,dim(mutated_offspring)[2]]
-#    population<-mutated_offspring[,1:(dim(mutated_offspring)[2]-1)]
+  while(iteration<=30){
+
     if(iteration==1){
       old_AIC<-rep(0,dim(population)[1])
     }
@@ -92,6 +85,8 @@ main<-function(data,
 
     population<-population_withfit[,1:(dim(population_withfit)[2]-1)]
 
+    error<-crossprod(sort(population_withfit[,dim(population_withfit)[2]])-sort(old_AIC))
+
     AIC[[iteration]]<-population_withfit[,dim(population_withfit)[2]]
 
     iteration=iteration+1
@@ -106,12 +101,12 @@ main<-function(data,
   return(list(AIC,as.data.frame(cbind(y_variable,x_selected))))
 }
 
-m <- main(data=main_dataset,
-          method='tournament',
-          p=2,
-          mutation_rate = 0.01,
-          regression_target = 'V2',
-          scheme = "re-rank")
+# m <- main(data=main_dataset,
+#           method='tournament',
+#           p=2,
+#           mutation_rate = 0.01,
+#           regression_target = 'V2',
+#           scheme = "re-rank")
 
 # mm <- matrix(unlist(m),nrow = 6)
 # pts <- data.frame()

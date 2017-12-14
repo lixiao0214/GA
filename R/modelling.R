@@ -28,7 +28,7 @@ split_data <- function(dataset, target_name){
 }
 
 # Unit function
-get_goodness_of_fit <- function(df, regression_target, x_names, criterion = "AIC") {
+get_goodness_of_fit <- function(df, regression_target, criterion = "AIC") {
   #' Goodness of Fit
   #'
   #' Returns the goodness-of-fit for regression_target ~ df
@@ -49,12 +49,13 @@ get_goodness_of_fit <- function(df, regression_target, x_names, criterion = "AIC
   criterion_function <- match.fun(criterion)
 
   # Build the formula
-  formula <- as.formula(paste(regression_target, "~", paste(x_names, collapse = " + ")))
-  lm_fit <- lm(formula = formula, data = df)
+
+  data<-df[,(2:dim(df)[2])]
+  lm_fit <- lm(df[,1] ~. , data = data)
 
   goodness_of_fit <- criterion_function(lm_fit)
   return(goodness_of_fit)
-  }
+}
 
 compute_population_goodness_of_fit <- function(data, population, regression_target,
                                                criterion = "AIC", verbose = FALSE) {
@@ -92,55 +93,55 @@ compute_population_goodness_of_fit <- function(data, population, regression_targ
     x_variable <- split_data(dataset = data, regression_target)[[2]]
     x_names <- names(x_variable[ selected_columns])
     subset_data <- cbind(y_variable,x_variable[selected_columns])
-    return(get_goodness_of_fit(df = subset_data, regression_target = regression_target, x_names, criterion = criterion))
+    return(get_goodness_of_fit(df = subset_data, regression_target = regression_target,  criterion = criterion))
   })
   population <- cbind(population, goodness_of_fit_values)
   return(population)
 }
 
-generate_toy_dataset <- function(n_cols = 7, n_rows = 100, n_population = 50, regression_target = "V1") {
-  #' Generate a toy dataset
-  #'
-  #' Returns a toy dataset in the appropriate format
-  #' Enforce 1s in the regression_target column, and sum of row for population > 1 (otherwise no regression)
-  #'
-  #' @author Louis Rémus
-  #' @param n_cols : number of columns of the regression dataset
-  #' @param n_rows : number of rows of the regression dataset
-  #' @param n_population : number of rows of the population dataset
-  #' @param regression_target character: column of df regressed on other covariates in df
-  #' @example
-  #' @return main_dataset, population_dataset
-
-  stopifnot(is.character(regression_target))
-
-  main_dataset <- as.data.frame(matrix(runif(n = n_rows * n_cols), nrow = n_rows, ncol = n_cols))
-
-  population <- as.data.frame(matrix(rbinom(n = n_population * n_cols, prob = .5, size = 1), ncol = n_cols))
-
-  # Make sure we always have the regression_target column in our regressions
-  # population[regression_target] = 1
-
-  # Make sure we do not have rows with sum of bool = 1 (means no regression)
-  if (any(rowSums(population) <= 1)) {
-    # list of covariates
-    col_names <- names(population)
-    col_names <- col_names[col_names != regression_target]
-    # Put a one in the first covariate
-    population[, col_names][rowSums(population[, col_names]) == 0, 1] = 1
-  }
-
-  return(list(population = population[, col_names],
-              main_dataset = main_dataset))
-}
+#' generate_toy_dataset <- function(n_cols = 7, n_rows = 100, n_population = 50, regression_target = "V1") {
+#'   #' Generate a toy dataset
+#'   #'
+#'   #' Returns a toy dataset in the appropriate format
+#'   #' Enforce 1s in the regression_target column, and sum of row for population > 1 (otherwise no regression)
+#'   #'
+#'   #' @author Louis Rémus
+#'   #' @param n_cols : number of columns of the regression dataset
+#'   #' @param n_rows : number of rows of the regression dataset
+#'   #' @param n_population : number of rows of the population dataset
+#'   #' @param regression_target character: column of df regressed on other covariates in df
+#'   #' @example
+#'   #' @return main_dataset, population_dataset
+#'
+#'   stopifnot(is.character(regression_target))
+#'
+#'   main_dataset <- as.data.frame(matrix(runif(n = n_rows * n_cols), nrow = n_rows, ncol = n_cols))
+#'
+#'   population <- as.data.frame(matrix(rbinom(n = n_population * n_cols, prob = .5, size = 1), ncol = n_cols))
+#'
+#'   # Make sure we always have the regression_target column in our regressions
+#'   # population[regression_target] = 1
+#'
+#'   # Make sure we do not have rows with sum of bool = 1 (means no regression)
+#'   if (any(rowSums(population) <= 1)) {
+#'     # list of covariates
+#'     col_names <- names(population)
+#'     col_names <- col_names[col_names != regression_target]
+#'     # Put a one in the first covariate
+#'     population[, col_names][rowSums(population[, col_names]) == 0, 1] = 1
+#'   }
+#'
+#'   return(list(population = population[, col_names],
+#'               main_dataset = main_dataset))
+#' }
 
 
 
 ####test
 #####generate dataset and population
-main_dataset <- as.data.frame(matrix(runif(n = 100 * 8), nrow = 100, ncol = 8))
-population <- matrix(rbinom(n = 1000 * 7, prob = 0.5, size = 1), ncol = 7)
-population_new <- compute_population_goodness_of_fit(data = main_dataset,
-                                                    population = population,
-                                                    "V1")
+# main_dataset <- as.data.frame(matrix(runif(n = 100 * 8), nrow = 100, ncol = 8))
+# population <- matrix(rbinom(n = 1000 * 7, prob = 0.5, size = 1), ncol = 7)
+# population_new <- compute_population_goodness_of_fit(data = main_dataset,
+#                                                      population = population,
+#                                                      "V1")
 
