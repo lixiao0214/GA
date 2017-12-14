@@ -13,18 +13,10 @@ get_next_population <- function(parents, offsprings, scheme){
   #' @param pct it is used to first method to determine the proportion of original population to be replaced
   #'
 
-  if(!is.data.frame(parents)){
-    stop("parents should be a data frame")
-  }
-
-  if(!is.data.frame(offsprings)){
-    stop("offsprings should be a data frame")
-  }
-
   next_population <- c()
   if(scheme=="proportion"){
     pct <- nrow(offsprings)/nrow(parents)
-    goodness_order <- order(parents$goodness_of_fit,decreasing = F)
+    goodness_order <- order(parents[,dim(parents)[2]],decreasing = F)
     index <- goodness_order[1:round(length(goodness_order)*(1-pct))]
     next_population <- rbind(parents[index,],offsprings)
   }

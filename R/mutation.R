@@ -1,7 +1,8 @@
 generate_mutation <- function(input,
                               mutation_rate,
                               main_dataset,
-                              regression_target){
+                              regression_target
+                              ){
   #' Generate offsprings after mutation
   #'
   #' @description generate_mutation is used to generate offsprings after mutations based on particular mutation rate.
@@ -25,55 +26,28 @@ generate_mutation <- function(input,
   #' main_dataset <- toy_datasets$main_dataset
   #' population <- toy_datasets$population
   #' generate_mutation(population, 0.01, main_dataset)
-  browser()
+
   stopifnot(is.matrix(input))
-  stopifnot(is.data.frame(main_dataset))
+
 
   if (mutation_rate < 0 || mutation_rate > 1) {
     stop("mutation_rate should be a number between 0 and 1.")
   }
 
   # Generate a copy of the input without regression_target
-  col_names <- names(main_dataset)
-  col_names <- col_names[col_names != regression_target]
   after_mutation <- input
 
   # Perform mutation
   rand <- runif(length(after_mutation))
   index <- which(rand < mutation_rate)
-  after_mutation[index] <- abs(after_mutation[index] - 1)
-
-  # Create df_mutation data.frame
-  df_mutation <- as.data.frame(after_mutation)
-  names(df_mutation) <- col_names
-
-  # Make sure we always have the regression_target column
-  # df_mutation[regression_target] = 1
+  after_mutation[index] <- 1 - after_mutation[index]
 
   offsprings <- compute_population_goodness_of_fit(data = main_dataset,
-                                                   population = df_mutation,
+                                                   population = after_mutation,
                                                    regression_target = regression_target,
                                                    verbose = TRUE)
   return(offsprings)
 }
 
-# Testing
-# Parameters
-regression_target <- "V1"
-n_cols = 8
-n_rows = 100
-n_population = 300
 
-# Generate init dataset
-toy_datasets <- generate_toy_dataset(n_cols = n_cols,
-                                     n_rows = n_rows,
-                                     n_population = n_population,
-                                     regression_target = regression_target)
-main_dataset <- toy_datasets$main_dataset
-population <- toy_datasets$population
-
-generate_mutation(input = as.matrix(population),
-                  mutation_rate = 0.2,
-                  main_dataset = main_dataset,
-                  regression_target = "V1")
 
