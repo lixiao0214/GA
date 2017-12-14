@@ -41,7 +41,8 @@ main<-function(data,
                p,
                mutation_rate,
                regression_target,
-               scheme){
+               scheme,
+               max_iter){
   #' Main function
   #'
   #' Returns the optimal x variable and every generation's AIC values
@@ -67,7 +68,7 @@ main<-function(data,
   iteration<-1
   error <- 1
 
-  while(iteration<=30){
+  while(iteration<=max_iter&&error>0.001){
 
     if(iteration==1){
       old_AIC<-rep(0,dim(population)[1])
@@ -85,7 +86,7 @@ main<-function(data,
 
     population<-population_withfit[,1:(dim(population_withfit)[2]-1)]
 
-    error<-crossprod(sort(population_withfit[,dim(population_withfit)[2]])-sort(old_AIC))
+    error<-max(population_withfit[,dim(population_withfit)[2]])-min(population_withfit[,dim(population_withfit)[2]])
 
     AIC[[iteration]]<-population_withfit[,dim(population_withfit)[2]]
 
@@ -126,5 +127,6 @@ xxx<-main(data=mtcars,
           p=2,
           mutation_rate = 0.01,
           regression_target = 'mpg',
-          scheme = "re-rank")
+          scheme = "re-rank",
+          max_iter = 100)
 
