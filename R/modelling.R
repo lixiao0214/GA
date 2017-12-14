@@ -20,15 +20,15 @@ check_input <- function(input) {
   lapply(input, stopifnot(is.data.frame))
 }
 
-####get dataset and target_names, output Y_variable(one column), X_variable(feature matrix)
-split_data<-function(dataset, target_name){
-  y_variable<-dataset[target_name]
-  x_variable<-setdiff(dataset,y_variable)
+# get dataset and target_names, output Y_variable(one column), X_variable(feature matrix)
+split_data <- function(dataset, target_name){
+  y_variable <- dataset[target_name]
+  x_variable <- setdiff(dataset,y_variable)
   return(list(y_variable,x_variable))
 }
 
 # Unit function
-get_goodness_of_fit <- function(df, regression_target, x_names,criterion = "AIC") {
+get_goodness_of_fit <- function(df, regression_target, x_names, criterion = "AIC") {
   #' Goodness of Fit
   #'
   #' Returns the goodness-of-fit for regression_target ~ df
@@ -85,16 +85,16 @@ compute_population_goodness_of_fit <- function(data, population, regression_targ
 
   goodness_of_fit_values <- sapply(1:nrow(population), function(i){
     if (verbose) print(paste("Processing element:", i))
-    if(sum(population[i,])==0) return(100000)
+    if (sum(population[i, ]) == 0) return(100000)
     selected_columns <- as.logical(population[i, ])
 
-    y_variable<-split_data(dataset = data, regression_target)[[1]]
-    x_variable<-split_data(dataset = data, regression_target)[[2]]
-    x_names<-names(x_variable[ selected_columns])
-    subset_data<-cbind(y_variable,x_variable[selected_columns])
+    y_variable <- split_data(dataset = data, regression_target)[[1]]
+    x_variable <- split_data(dataset = data, regression_target)[[2]]
+    x_names <- names(x_variable[ selected_columns])
+    subset_data <- cbind(y_variable,x_variable[selected_columns])
     return(get_goodness_of_fit(df = subset_data, regression_target = regression_target, x_names, criterion = criterion))
   })
-  population<-cbind(population,goodness_of_fit_values)
+  population <- cbind(population, goodness_of_fit_values)
   return(population)
 }
 
