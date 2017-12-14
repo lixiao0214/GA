@@ -183,9 +183,6 @@ selectparents <- function(originalparents, couplenum, method, fitness, subsetnum
          tournament = tournament(originalparents, couplenum, subsetnum, fitness))
 }
 
-=======
-
-
 
 
 ###method one : select one parent with probability proportional to fitness(or fitnessrank)
