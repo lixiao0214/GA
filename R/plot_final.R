@@ -29,14 +29,16 @@ mutation_001 <- main(data=mtcars,
                      p=2,
                      mutation_rate = 0.01,
                      regression_target = "mpg",
-                     scheme = "re-rank")
+                     scheme = "re-rank",
+                     max_iter = 500)
 
 mutation_010 <- main(data=mtcars,
                      method = "onepropselection",
                      p=2,
                      mutation_rate = 0.1,
                      regression_target = "mpg",
-                     scheme = "re-rank")
+                     scheme = "re-rank",
+                     max_iter = 500)
 
 plot_final(mutation_001)
 plot_final(mutation_010)
@@ -47,14 +49,16 @@ p_2 <- main(data=mtcars,
             p=2,
             mutation_rate = 0.01,
             regression_target = "mpg",
-            scheme = "re-rank")
+            scheme = "re-rank",
+            max_iter = 500)
 
 p_5 <- main(data=mtcars,
             method = "onepropselection",
             p=5,
             mutation_rate = 0.01,
             regression_target = "mpg",
-            scheme = "re-rank")
+            scheme = "re-rank",
+            max_iter = 500)
 
 plot_final(p_2)
 plot_final(p_5)
@@ -65,21 +69,24 @@ select_1 <- main(data=mtcars,
                  p=2,
                  mutation_rate = 0.01,
                  regression_target = "mpg",
-                 scheme = "re-rank")
+                 scheme = "re-rank",
+                 max_iter = 500)
 
 select_2 <- main(data=mtcars,
                  method = "twopropselection",
                  p=2,
                  mutation_rate = 0.01,
                  regression_target = "mpg",
-                 scheme = "re-rank")
+                 scheme = "re-rank",
+                 max_iter = 500)
 
 select_3 <- main(data=mtcars,
                  method = "tournament",
                  p=2,
                  mutation_rate = 0.01,
                  regression_target = "mpg",
-                 scheme = "re-rank")
+                 scheme = "re-rank",
+                 max_iter = 500)
 
 plot_final(select_1)
 plot_final(select_2)
@@ -91,14 +98,16 @@ replace_prop <- main(data=mtcars,
                      p=2,
                      mutation_rate = 0.01,
                      regression_target = "mpg",
-                     scheme = "proportion")
+                     scheme = "proportion",
+                     max_iter = 500)
 
 replace_rerank <- main(data=mtcars,
                        method = "tournament",
                        p=2,
                        mutation_rate = 0.01,
                        regression_target = "mpg",
-                       scheme = "re-rank")
+                       scheme = "re-rank",
+                       max_iter = 500)
 
 plot_final(replace_prop)
 plot_final(replace_rerank)

@@ -42,7 +42,7 @@ main<-function(data,
                mutation_rate,
                regression_target,
                scheme,
-               max_iter){
+               max_iter = 100){
   #' Main function
   #'
   #' Returns the optimal x variable and every generation's AIC values
@@ -54,6 +54,7 @@ main<-function(data,
   #' @param p integer: splits number in crossover
   #' @param mutation_rate numeric: the rate of mutation in population
   #' @param scheme method of replacing population, "proportion" or "re-rank"
+  #' @param max_iter the number of iterations given by the user
   #' @example main(data= mtcars, regression_target = 'mpg', p=2, mutation_rate=0.01)
   #' @return optimal x variable and every generation's AIC values
 

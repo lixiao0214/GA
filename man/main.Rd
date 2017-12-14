@@ -4,7 +4,8 @@
 \alias{main}
 \title{Main function}
 \usage{
-main(data, method, p, mutation_rate, regression_target, scheme)
+main(data, method, p, mutation_rate, regression_target, scheme,
+  max_iter = 100)
 }
 \arguments{
 \item{data}{data.frame: regression_target and covariates}
@@ -18,6 +19,8 @@ main(data, method, p, mutation_rate, regression_target, scheme)
 \item{regression_target}{character: Y variable}
 
 \item{scheme}{method of replacing population, "proportion" or "re-rank"}
+
+\item{max_iter}{the number of iterations given by the user}
 }
 \value{
 optimal x variable and every generation's AIC values
