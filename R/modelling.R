@@ -50,8 +50,8 @@ get_goodness_of_fit <- function(df, regression_target, criterion = "AIC") {
 
   # Build the formula
 
-  data<-df[,(2:dim(df)[2])]
-  lm_fit <- lm(df[,1] ~. , data = data)
+  x<-as.data.frame(df[,(2:dim(df)[2])])
+  lm_fit <- lm(df[,1] ~., data=x)
 
   goodness_of_fit <- criterion_function(lm_fit)
   return(goodness_of_fit)
