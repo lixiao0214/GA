@@ -115,7 +115,7 @@ getrankfitness <- function(fitness, reverse = TRUE){
   #' @author Lei Zhang
   #' @param fitness goodness of fit ~ a casenum * 1 vector , default is AICvalue
   #' @param reverse whether we need to reverse the order when we rank the values in fitness, depends on whether the larger the value in the "fitness" vector , the better the fitness
-  #' @example getrankfitness(fitness = AICvalue, reverse = TRUE); getrankfitness(fitness = Rsquare, reverse = FALSE)
+  #' @example getrankfitness(fitness = c(1,2,3,4,-10,7), reverse = TRUE); getrankfitness(fitness = c(1,2,3,4,-10,7), reverse = FALSE)
 
   stopifnot(is.vector(fitness))
   stopifnot(is.logical(reverse))
@@ -139,7 +139,7 @@ selectparents <- function(originalparents, couplenum, method, fitness, subsetnum
   #' @param method the method to select the parents, "twopropselection", "onepropselection" or "tournament"
   #' @param fitness goodness of fit ~ a casenum * 1 vector , default is AICvalue
   #' @param subsetnum In method "tournament", we partition the set of chromosomes in generation t into "subsetnum" disjoint subsets
-  #' @example selectparents(originalparents = x, couplenum = 10, method = "tournament", fitness=AICvalue, subsetnum = 5 )
+  #' @example selectparents(originalparents = matrix(rep(c(1,0,0,1),5), nrow = 5), couplenum = 10, method = "tournament", fitness=c(1,4,-2,7,5), subsetnum = 2)
 
   stopifnot(is.matrix(originalparents))
   stopifnot(is.numeric(couplenum))
