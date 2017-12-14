@@ -7,7 +7,7 @@ split_data<-function(dataset, target_name){
   return(list(y_variable,x_variable))
 }
 
-get_goodness_of_fit <- function(df, regression_target,x_names, criterion = "AIC") {
+get_goodness_of_fit <- function(df, regression_target , x_names, criterion = "AIC") {
 
   stopifnot(is.data.frame(df))
   stopifnot(is.character(regression_target))
@@ -23,6 +23,7 @@ get_goodness_of_fit <- function(df, regression_target,x_names, criterion = "AIC"
   goodness_of_fit <- criterion_function(lm_fit)
   return(goodness_of_fit)
 }
+
 
 compute_population_goodness_of_fit <- function(data, population, regression_target,
                                                criterion = "AIC", verbose = FALSE) {
@@ -41,16 +42,13 @@ compute_population_goodness_of_fit <- function(data, population, regression_targ
   goodness_of_fit_values <- sapply(1:nrow(population), function(i){
     if (verbose) print(paste("Processing element:", i))
     selected_columns <- as.logical(population[i, ])
-    if (sum(selected_columns) == 1) {
-      # We have only one column
-      print("Only one column in regression data.frame, exiting.")
-      stop()
-    }
+
+
     y_variable<-split_data(data, regression_target)[[1]]
     x_variable<-split_data(data, regression_target)[[2]]
     x_names<-names(x_variable[, selected_columns])
     subset_data<-cbind(y_variable,x_variable[, selected_columns])
-    return(get_goodness_of_fit(df = subset_data, regression_target = regression_target,x_names, criterion = criterion))
+    return(get_goodness_of_fit(df = subset_data, regression_target = regression_target, x_names, criterion = criterion))
   })
   population<-cbind(population,goodness_of_fit_values)
   return(population)

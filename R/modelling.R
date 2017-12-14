@@ -88,8 +88,8 @@ compute_population_goodness_of_fit <- function(data, population, regression_targ
     if(sum(population[i,])==0) return(100000)
     selected_columns <- as.logical(population[i, ])
 
-    y_variable<-split_data(data, regression_target)[[1]]
-    x_variable<-split_data(data, regression_target)[[2]]
+    y_variable<-split_data(dataset = data, regression_target)[[1]]
+    x_variable<-split_data(dataset = data, regression_target)[[2]]
     x_names<-names(x_variable[ selected_columns])
     subset_data<-cbind(y_variable,x_variable[selected_columns])
     return(get_goodness_of_fit(df = subset_data, regression_target = regression_target, x_names, criterion = criterion))
