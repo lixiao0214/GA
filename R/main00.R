@@ -1,7 +1,6 @@
 # Importing files
 source("R/modelling.R")
 source("R/mutation.R")
-# source("selectparent0.R")
 source("R/selectparent.R")
 source("R/cross_p_split.R")
 source("R/replace population.R")
@@ -92,8 +91,6 @@ main<-function(data,
                                       scheme = scheme)
 
     population<-population_withfit[,1:(dim(population_withfit)[2]-1)]
-
-    error<-crossprod(sort(population_withfit[,dim(population_withfit)[2]])-sort(old_AIC))
 
     AIC[[iteration]]<-population_withfit[,dim(population_withfit)[2]]
 
