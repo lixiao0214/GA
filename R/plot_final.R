@@ -11,7 +11,7 @@ plot_final <- function(input){
   require(ggplot2)
   m <- matrix(unlist(input[[1]]),nrow = length(input[[1]]))
   pts <- data.frame()
-  for(i in 1:nrow(mm)){
+  for(i in 1:nrow(m)){
     pts <- rbind(pts,data.frame(x=rep(i,length(m[i,])),y=m[i,]))
   }
 
