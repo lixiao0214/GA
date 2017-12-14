@@ -11,7 +11,7 @@ get_next_population <- function(parents, offsprings, scheme){
   #' @param offsprings a data frame contains all offsprings
   #' @param scheme "proportion" returns the first method and "re-rank" returns the second method
   #'
-  #' @example #Generate random input and choose a specific dataset in R
+  #' @examples #Generate random input and choose a specific dataset in R
   #' regression_target <- "V1"
   #' toy_datasets <- generate_toy_dataset(regression_target = regression_target)
   #' main_dataset <- toy_datasets$main_dataset

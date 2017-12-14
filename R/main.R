@@ -44,7 +44,9 @@ run_one_iteration <- function(main_dataset,
   #' @param method the method to select the parents, "twopropselection", "onepropselection" or "tournament"
   #' @param subsetnum In method "tournament", we partition the set of chromosomes in generation t into "subsetnum" disjoint subsets
   #' @param p Number of splits in the process of crossover.
-  #' @param mutation_rate
+  #' @param mutation_rate The chance for each variable in each individual to change the value.
+  #' @param scheme "proportion" means replacing population by percentage
+  #' and "re-rank" means replacing population by re-rank the combination of populations
   #' @example compute_population_goodness_of_fit(data = main_dataset,
   #' population = population,
   #' regression_target = 'col_1')
