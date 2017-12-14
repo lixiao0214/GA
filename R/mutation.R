@@ -24,11 +24,10 @@ generate_mutation <- function(input,
   #' regression_target <- "V1"
   #' toy_datasets <- generate_toy_dataset(regression_target = regression_target)
   #' main_dataset <- toy_datasets$main_dataset
-  #' population <- toy_datasets$population
-  #' generate_mutation(population, 0.01, main_dataset)
+  #' population <- as.matrix(toy_datasets$population)
+  #' generate_mutation(population, 0.01, main_dataset,regression_target)
 
   stopifnot(is.matrix(input))
-
 
   if (mutation_rate < 0 || mutation_rate > 1) {
     stop("mutation_rate should be a number between 0 and 1.")
@@ -38,10 +37,14 @@ generate_mutation <- function(input,
   after_mutation <- input
 
   # Perform mutation
+  # Generate random number from Unif(0,1) for each cell in the input
+  # It the random number is smaller than mutation rate
+  # The corresponding cell will mutate
   rand <- runif(length(after_mutation))
   index <- which(rand < mutation_rate)
   after_mutation[index] <- 1 - after_mutation[index]
 
+  # Get goodness of fit for each offspring
   offsprings <- compute_population_goodness_of_fit(data = main_dataset,
                                                    population = after_mutation,
                                                    regression_target = regression_target,
