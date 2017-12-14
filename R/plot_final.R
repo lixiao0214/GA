@@ -94,7 +94,7 @@ plot_final(select_3)
 
 # Fixing all parameters except method of replacing population
 replace_prop <- main(data=mtcars,
-                     method = "tournament",
+                     method = "twopropselection",
                      p=2,
                      mutation_rate = 0.01,
                      regression_target = "mpg",
@@ -102,7 +102,7 @@ replace_prop <- main(data=mtcars,
                      max_iter = 500)
 
 replace_rerank <- main(data=mtcars,
-                       method = "tournament",
+                       method = "twopropselection",
                        p=2,
                        mutation_rate = 0.01,
                        regression_target = "mpg",
