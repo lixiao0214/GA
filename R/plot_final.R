@@ -9,7 +9,7 @@ plot_final <- function(input){
   #' during different generations.
   #'
   require(ggplot2)
-  m <- matrix(unlist(input[[1]]),nrow = length(input[[1]]))
+  m <- matrix(unlist(input[[1]]),nrow = length(input[[1]]),byrow = T)
   pts <- data.frame()
   for(i in 1:nrow(m)){
     pts <- rbind(pts,data.frame(x=rep(i,length(m[i,])),y=m[i,]))
