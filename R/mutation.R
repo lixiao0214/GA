@@ -48,7 +48,7 @@ generate_mutation <- function(input,
   offsprings <- compute_population_goodness_of_fit(data = main_dataset,
                                                    population = after_mutation,
                                                    regression_target = regression_target,
-                                                   verbose = TRUE)
+                                                   )
   return(offsprings)
 }
 

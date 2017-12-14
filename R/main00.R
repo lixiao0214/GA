@@ -38,17 +38,30 @@ one_iteration<-function(data, population, p, mutation_rate,regression_target){
 
 ##### final function
 main<-function(data, p, mutation_rate, regression_target){
+  #' Main function
+  #'
+  #' Returns the optimal x variable and every generation's AIC values
+  #'
+  #' @author Jinhui Xu
+  #' @param data data.frame: regression_target and covariates
+  #' @param regression_target character: Y variable
+  #' @param p integer: splits number in crossover
+  #' @param mutation_rate numeric: the rate of mutation in population
+  #' @example main(data= mtcars, regression_target = 'mpg', p=2, mutation_rate=0.01)
+  #' @return optimal x variable and every generation's AIC values
+
+
 
   ###set original population
   ncols<-dim(data)[2]-1
   population <- matrix(rbinom(n = 100* ncols, prob = 0.5, size = 1), ncol = ncols)
 
-  ###
+
   AIC<-list()
   iteration<-1
   error <- 1
 
-  while(iteration<=100 && error>0.001){
+  while(iteration<=1000 && error>0.0001){
 #    old_AIC<-mutated_offspring[,dim(mutated_offspring)[2]]
 #    population<-mutated_offspring[,1:(dim(mutated_offspring)[2]-1)]
     if(iteration==1){
@@ -67,7 +80,14 @@ main<-function(data, p, mutation_rate, regression_target){
 
     iteration=iteration+1
   }
-  return(AIC)
+
+  ####calculate the final selected x varible and store in list
+  selected_columns <- as.logical(population[1, ])
+  y_variable<-split_data(dataset = data, regression_target)[[1]]
+  x_variable<-split_data(dataset = data, regression_target)[[2]]
+  x_selected<-x_variable[selected_columns]
+
+  return(list(AIC,as.data.frame(cbind(y_variable,x_selected))))
 }
 
 m <- main(data=main_dataset,  p=2, mutation_rate = 0.01, regression_target = 'V2')
@@ -83,5 +103,6 @@ m <- main(data=main_dataset,  p=2, mutation_rate = 0.01, regression_target = 'V2
 #  geom_point() +
 #  geom_smooth()
 
-xxx<-main(data=data,  p=2, mutation_rate = 0.01, regression_target = 'V1')
+####  test
+xxx<-main(data=mtcars,  p=2, mutation_rate = 0.01, regression_target = 'mpg')
 
