@@ -14,7 +14,13 @@ main_dataset <- as.data.frame(matrix(runif(n = 100 * 8), nrow = 100, ncol = 8))
 
 
 # make one ieteration
-one_iteration<-function(data, population, p, mutation_rate,regression_target){
+one_iteration<-function(data,
+                        population,
+                        method,
+                        p,
+                        mutation_rate,
+                        regression_target,
+                        scheme){
 
   ###add fitness to population
   population = compute_population_goodness_of_fit(data = data,
@@ -23,7 +29,7 @@ one_iteration<-function(data, population, p, mutation_rate,regression_target){
   ###select parents
   selected_parents <-selectparents(originalparents = as.matrix(population)[, (1:(dim(population)[2]-1))],
                                    couplenum = 10,
-                                   method = 'tournament',
+                                   method = method,
                                    fitness = population[,dim(population)[2]],
                                    subsetnum = 4)
   ###get new population with fitness
@@ -31,13 +37,18 @@ one_iteration<-function(data, population, p, mutation_rate,regression_target){
   mutated_offsprings <- generate_mutation(input = new_generation, mutation_rate = mutation_rate,
                                          main_dataset = data, regression_target = regression_target)
 
-  new_population<-get_next_population (population, mutated_offsprings, scheme='proportion')
+  new_population<-get_next_population (population, mutated_offsprings, scheme=scheme)
   #replace
   return(new_population)
 }
 
 ##### final function
-main<-function(data, p, mutation_rate, regression_target){
+main<-function(data,
+               method,
+               p,
+               mutation_rate,
+               regression_target,
+               scheme){
   #' Main function
   #'
   #' Returns the optimal x variable and every generation's AIC values
@@ -61,7 +72,7 @@ main<-function(data, p, mutation_rate, regression_target){
   iteration<-1
   error <- 1
 
-  while(iteration<=1000 && error>0.0001){
+  while(iteration<=100 && error>0.01){
 #    old_AIC<-mutated_offspring[,dim(mutated_offspring)[2]]
 #    population<-mutated_offspring[,1:(dim(mutated_offspring)[2]-1)]
     if(iteration==1){
@@ -70,7 +81,13 @@ main<-function(data, p, mutation_rate, regression_target){
     else old_AIC<-population_withfit[,dim(population_withfit)[2]]
 
 
-    population_withfit<-one_iteration(data = data,population= population, p=p, mutation_rate=mutation_rate, regression_target=regression_target)
+    population_withfit<-one_iteration(data = data,
+                                      population= population,
+                                      method = method,
+                                      p=p,
+                                      mutation_rate=mutation_rate,
+                                      regression_target=regression_target,
+                                      scheme = scheme)
 
     population<-population_withfit[,1:(dim(population_withfit)[2]-1)]
 
@@ -90,7 +107,13 @@ main<-function(data, p, mutation_rate, regression_target){
   return(list(AIC,as.data.frame(cbind(y_variable,x_selected))))
 }
 
-m <- main(data=main_dataset,  p=2, mutation_rate = 0.01, regression_target = 'V2')
+m <- main(data=main_dataset,
+          method='tournament',
+          p=2,
+          mutation_rate = 0.01,
+          regression_target = 'V2',
+          scheme = "re-rank")
+
 # mm <- matrix(unlist(m),nrow = 6)
 # pts <- data.frame()
 # for(i in 1:nrow(mm)){
@@ -104,5 +127,10 @@ m <- main(data=main_dataset,  p=2, mutation_rate = 0.01, regression_target = 'V2
 #  geom_smooth()
 
 ####  test
-xxx<-main(data=mtcars,  p=2, mutation_rate = 0.01, regression_target = 'mpg')
+xxx<-main(data=mtcars,
+          method = "tournament",
+          p=2,
+          mutation_rate = 0.01,
+          regression_target = 'mpg',
+          scheme = "re-rank")
 

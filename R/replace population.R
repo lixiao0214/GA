@@ -7,8 +7,8 @@ get_next_population <- function(parents, offsprings, scheme){
   #' The first method is to replace the worst certain percent of original population by offsprings.
   #' The second method is to combine all parents and offsprings, and then choose the top individuals.
   #'
-  #' @param parents a data frame contains the original population
-  #' @param offsprings a data frame contains all offsprings
+  #' @param parents a matrix contains the original population
+  #' @param offsprings a matrix contains all offsprings
   #' @param scheme "proportion" returns the first method and "re-rank" returns the second method
   #'
   #' @examples #Generate random input and choose a specific dataset in R
@@ -33,7 +33,7 @@ get_next_population <- function(parents, offsprings, scheme){
   # Perform second method
   if(scheme=="re-rank"){
     total_population <- rbind(parents,offsprings)
-    index <- order(total_population$goodness_of_fit,decreasing = F)
+    index <- order(total_population[,dim(parents)[2]],decreasing = F)
     next_index <- index[1:nrow(parents)]
     next_population <- total_population[next_index,]
   }
