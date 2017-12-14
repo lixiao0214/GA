@@ -74,7 +74,7 @@ main<-function(data,
   iteration<-1
   error <- 1
 
-  while(iteration<=100 && error>0.01){
+  while(iteration<=500){
 #    old_AIC<-mutated_offspring[,dim(mutated_offspring)[2]]
 #    population<-mutated_offspring[,1:(dim(mutated_offspring)[2]-1)]
     if(iteration==1){
@@ -130,7 +130,7 @@ m <- main(data=main_dataset,
 
 ####  test
 xxx<-main(data=mtcars,
-          method = "tournament",
+          method = "onepropselection",
           p=2,
           mutation_rate = 0.01,
           regression_target = 'mpg',
