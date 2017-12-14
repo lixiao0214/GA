@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 ###calculate the fitness, the default is AIC
 # getfitness <- function(originalparents, fitfun = NULL){
 #   #originalparents is a casenum * variablenum matrix
@@ -337,5 +335,3 @@ selectparents <- function(originalparents, couplenum, method, fitness, subsetnum
          onepropselection = onepropselection(originalparents, couplenum, fitness),
          tournament = tournament(originalparents, couplenum, subsetnum, fitness))
 }
-
->>>>>>> 61a049d219133e0716978759797f4835a3af1019
