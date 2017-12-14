@@ -53,11 +53,13 @@ main<-function(data,
   #'
   #' Returns the optimal x variable and every generation's AIC values
   #'
-  #' @author Jinhui Xu
+  #' @author Jinhui Xu, Xiao Li
   #' @param data data.frame: regression_target and covariates
+  #' @param method the method to select the parents, "twopropselection", "onepropselection" or "tournament"
   #' @param regression_target character: Y variable
   #' @param p integer: splits number in crossover
   #' @param mutation_rate numeric: the rate of mutation in population
+  #' @param scheme method of replacing population, "proportion" or "re-rank"
   #' @example main(data= mtcars, regression_target = 'mpg', p=2, mutation_rate=0.01)
   #' @return optimal x variable and every generation's AIC values
 
