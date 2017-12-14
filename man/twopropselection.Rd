@@ -2,7 +2,7 @@
 % Please edit documentation in R/selectparent.R
 \name{twopropselection}
 \alias{twopropselection}
-\title{Method : twopropselection}
+\title{twopropselection}
 \usage{
 twopropselection(originalparents, couplenum, fitness)
 }
@@ -13,10 +13,12 @@ twopropselection(originalparents, couplenum, fitness)
 
 \item{fitness}{goodness of fit ~ a casenum * 1 vector , default is AICvalue}
 }
+\value{
+Returns the selected parents ~ list
+}
 \description{
 Select one parent with probability proportional to fitness(or fitnessrank)
 and to select the other parent completely at random
-Returns the selected parents ~ list
 }
 \author{
 Lei Zhang

@@ -2,7 +2,7 @@
 % Please edit documentation in R/selectparent.R
 \name{onepropselection}
 \alias{onepropselection}
-\title{Method : onepropselection}
+\title{onepropselection}
 \usage{
 onepropselection(originalparents, couplenum, fitness)
 }

@@ -2,13 +2,7 @@
 % Please edit documentation in R/selectparent.R
 \name{tournament}
 \alias{tournament}
-\title{Method : tournament selection
-the set of parents in generation t is randomly partitioned into k disjoint
-subsets of equal size(perhaps with a few remaining parents temporarily ignored)
-The best individual in each group is chosen as a parent.
-Additional random partitionings are carried out until sufficient parents have
-been generated.Parents are then paired randomly for breeding.
-Returns the selected parents ~ list}
+\title{tournament selection}
 \usage{
 tournament(originalparents, couplenum, subsetnum, fitness)
 }
@@ -21,14 +15,15 @@ tournament(originalparents, couplenum, subsetnum, fitness)
 
 \item{fitness}{goodness of fit ~ a casenum * 1 vector , default is AICvalue}
 }
+\value{
+Returns the selected parents ~ list
+}
 \description{
-Method : tournament selection
 the set of parents in generation t is randomly partitioned into k disjoint
 subsets of equal size(perhaps with a few remaining parents temporarily ignored)
 The best individual in each group is chosen as a parent.
 Additional random partitionings are carried out until sufficient parents have
 been generated.Parents are then paired randomly for breeding.
-Returns the selected parents ~ list
 }
 \author{
 Lei Zhang

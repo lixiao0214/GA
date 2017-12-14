@@ -23,5 +23,5 @@ Returns the goodness of fit for the given population
 Returns the goodness of fit for the given population
 }
 \author{
-Louis Rémus
+Louis Rémus, Jinhui Xu
 }

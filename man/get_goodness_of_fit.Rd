@@ -20,5 +20,5 @@ Goodness of fit value for the given regression problem
 Returns the goodness-of-fit for regression_target ~ df
 }
 \author{
-Louis Rémus
+Louis Rémus, Jinhui Xu
 }

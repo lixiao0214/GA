@@ -15,6 +15,8 @@ Each column represents the variable.}
 
 \item{main_dataset}{The dataset used to run the regression model.
 And its model help to get the corresponding value of goodness of fit.}
+
+\item{regression_target}{character: column of df regressed on other covariates in df}
 }
 \description{
 generate_mutation is used to generate offsprings after mutations based on particular mutation rate.
@@ -22,10 +24,11 @@ And it will give the values of goodness of fit for each offspring.
 }
 \examples{
 # Generate random input and choose a specific dataset in R
-population <- as.data.frame(matrix(rbinom(n = 300, prob = .5, size = 1), ncol = 10))
-main_dataset <- as.data.frame.matrix(crimtab[, 1:10])
-generate_mutation(population, 0.01,main_dataset)
-
+regression_target <- "V1"
+toy_datasets <- generate_toy_dataset(regression_target = regression_target)
+main_dataset <- toy_datasets$main_dataset
+population <- as.matrix(toy_datasets$population)
+generate_mutation(population, 0.01, main_dataset,regression_target)
 }
 \author{
 Xiao Li

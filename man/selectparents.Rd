@@ -2,8 +2,7 @@
 % Please edit documentation in R/selectparent.R
 \name{selectparents}
 \alias{selectparents}
-\title{In this selection mechanism, parents are chosen to produce offspring in the next stage.
-Three different methods are provided: "twopropselection", "onepropselection" and "tournament"}
+\title{select parents in the genetic algorithms}
 \usage{
 selectparents(originalparents, couplenum, method, fitness, subsetnum = NULL)
 }
@@ -17,6 +16,9 @@ selectparents(originalparents, couplenum, method, fitness, subsetnum = NULL)
 \item{fitness}{goodness of fit ~ a casenum * 1 vector , default is AICvalue}
 
 \item{subsetnum}{In method "tournament", we partition the set of chromosomes in generation t into "subsetnum" disjoint subsets}
+}
+\value{
+Returns the selected parents ~ list
 }
 \description{
 In this selection mechanism, parents are chosen to produce offspring in the next stage.

@@ -4,21 +4,29 @@
 \alias{get_next_population}
 \title{Generate next population}
 \usage{
-get_next_population(parents, offsprings, scheme, pct = NULL)
+get_next_population(parents, offsprings, scheme)
 }
 \arguments{
-\item{parents}{a data frame contains the original population}
+\item{parents}{a matrix contains the original population}
 
-\item{offsprings}{a data frame contains all offsprings}
+\item{offsprings}{a matrix contains all offsprings}
 
 \item{scheme}{"proportion" returns the first method and "re-rank" returns the second method}
-
-\item{pct}{it is used to first method to determine the proportion of original population to be replaced}
 }
 \description{
 get_next_population generate next population to use based on two methods.
 The first method is to replace the worst certain percent of original population by offsprings.
 The second method is to combine all parents and offsprings, and then choose the top individuals.
+}
+\examples{
+#Generate random input and choose a specific dataset in R
+regression_target <- "V1"
+toy_datasets <- generate_toy_dataset(regression_target = regression_target)
+main_dataset <- toy_datasets$main_dataset
+population <- toy_datasets$population
+population$"goodness_of_fit_values" <- runif(50,0,100)
+offsprings <- population[sample(1:50,20),]
+get_next_population(population,offsprings,scheme = "re-rank")
 }
 \author{
 Xiao Li
