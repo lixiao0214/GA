@@ -5,7 +5,7 @@ result<-select(data=mtcars,method = "onepropselection",p=2,
 
 test_that("test select.R works",{
           expect_true(is.list(result))
-          expect_true(length(result[[2]]==4))
+
 }
 )
 
