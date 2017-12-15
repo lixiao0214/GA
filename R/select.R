@@ -1,9 +1,9 @@
 # Importing files
-source("R/modelling.R")
-source("R/mutation.R")
-source("R/selectparent.R")
-source("R/cross_p_split.R")
-source("R/replace population.R")
+# source("R/modelling.R")
+# source("R/mutation.R")
+# source("R/selectparent.R")
+# source("R/cross_p_split.R")
+# source("R/replace population.R")
 
 # make one ieteration
 one_iteration<-function(data,
@@ -101,32 +101,4 @@ select<-function(data,
 
   return(list(AIC,as.data.frame(cbind(y_variable,x_selected))))
 }
-
-# m <- main(data=main_dataset,
-#           method='tournament',
-#           p=2,
-#           mutation_rate = 0.01,
-#           regression_target = 'V2',
-#           scheme = "re-rank")
-
-# mm <- matrix(unlist(m),nrow = 6)
-# pts <- data.frame()
-# for(i in 1:nrow(mm)){
-#   pts <- rbind(pts,data.frame(x=rep(i,length(mm[i,])),y=mm[i,]))
-# }
-# pts
-
-#  library(ggplot2)
-#  ggplot(data = pts, aes(x=x,y=y)) +
-#  geom_point() +
-#  geom_smooth()
-
-# ####  test
-# xxx<-select(data=mtcars,
-#           method = "onepropselection",
-#           p=2,
-#           mutation_rate = 0.01,
-#           regression_target = 'mpg',
-#           scheme = "re-rank",
-#           max_iter = 100)
 
