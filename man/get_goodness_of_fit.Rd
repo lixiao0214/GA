@@ -4,7 +4,8 @@
 \alias{get_goodness_of_fit}
 \title{Goodness of Fit}
 \usage{
-get_goodness_of_fit(df, regression_target, criterion = "AIC")
+get_goodness_of_fit(df, regression_target, criterion = "AIC",
+  glmindicator = FALSE, family = gaussian)
 }
 \arguments{
 \item{df}{data.frame: regression_target and covariates}
